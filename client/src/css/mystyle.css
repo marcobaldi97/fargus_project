@@ -1,0 +1,17 @@
+.mainPanel {
+    padding: 5% 5% 5% 5%;
+}
+.fullPage {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+html {
+    height: 100%;
+  }
+  body {
+    min-height: 100%;
+  }
