@@ -1,6 +1,7 @@
 const { text } = require('express');
 var express = require('express');
 var router = express.Router();
+import dataBaseMediator from '../clases/dataBaseMediator';
 
 /* GET home page. */
 var miMapa = new Map();
