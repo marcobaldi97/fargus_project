@@ -73,4 +73,18 @@ router.post('/publish/', function(req, res, next) {
   }
 });
 
+router.post('/deletePost/', function(req, res, next) {
+  try{
+    let dbm = new dataBaseMediator();
+    let textToInput = req.body.idToDelete;
+    const queryToDelete = 'DELETE FROM publications WHERE id_publication = '+textToInput+';'
+    dbm.executeDeleteConsult(queryToDelete);
+    console.log('publication deleted.')
+  }catch(err){
+    var errResponse = 'Something wrong happened in /deletePost/';
+    console.log(errResponse);
+    res.send(errResponse);
+  }
+});
+
 module.exports = router;
