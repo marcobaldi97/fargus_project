@@ -1,7 +1,7 @@
 const { json } = require('express');
 const  {Pool, Client} = require('pg');
 
-class dataBaseMediator{ 
+export class dataBaseMediator{ 
     constructor (){
         let lastSelectDBResponse;
         let lastInsertDBResponse;
@@ -32,17 +32,6 @@ class dataBaseMediator{
         }   
     }
 
-    executeSelectConsultVersion2(select_consult){
-        this.client
-            .query('SELECT NOW() as now')
-            .then(res => {
-                console.log(res.rows);
-                return res.rows;
-            })
-            .catch(e => console.error(e.stack)) 
-            .finally();
-    }
-
     async executeInsertConsult(insert_consult){
         try{
             const queryResponse = await this.pool.query(insert_consult);
@@ -61,36 +50,8 @@ class dataBaseMediator{
     }
 }//final clase
 
-/*
-let a = new dataBaseMediator();
-let b = [];
-b = a.executeSelectConsultVersion2;
-for (i = 0; i < b.length; i++) {
-    console.log('El id es: '+b[i].publication_id+' El contenido es:'+b[i].publication_content);
-}
-console.log('Wtf?');
-*/
-
 
 /*
-try{ 
-    (async () => {
-        let a = new dataBaseMediator();
-        let b = [];
-        b = await a.executeSelectConsult('SELECT * FROM publications');
-        console.log('↓↓↓↓↓↓ This is your response ↓↓↓↓↓↓');
-        var i;
-        for (i = 0; i < b.length; i++) {
-            console.log('El id es: '+b[i].publication_id+' El contenido es:'+b[i].publication_content);
-        }
-        console.log('Wtf?');
-    })()   
-}catch(error){
-    console.error(error);
-}
-*/
-
-/* Attempt #1
 try{ 
     (async () => {
         let a = new dataBaseMediator();
