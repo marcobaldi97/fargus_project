@@ -5,6 +5,7 @@ export class dataBaseMediator{
     constructor (){
         let lastSelectDBResponse;
         let lastInsertDBResponse;
+        let lastDeleteDBResponse;
         const dbUser = 'postgres';
         const dbPassword = 'basedMaster97';
         const dbIp = 'localhost';
@@ -41,12 +42,25 @@ export class dataBaseMediator{
         }   
     }
 
+    async executeDeleteConsult(select_consult){
+        try{
+            const queryResponse = await this.pool.query(select_consult);
+            this.lastDeleteDBResponse = queryResponse;
+        }catch(error){
+            console.log(error);
+        }   
+    }
+
     getLastSelectDBResponse(){
         return this.lastSelectDBResponse;
     }    
 
     getLastInsertDBResponse(){
         return this.lastInsertDBResponse;
+    }
+
+    getLastDeleteDBResponse(){
+        return this.lastDeleteDBResponse;
     }
 }//final clase
 
