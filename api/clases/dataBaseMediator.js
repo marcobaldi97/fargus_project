@@ -42,9 +42,9 @@ module.exports = class DataBaseMediator{
         }   
     }
 
-    async executeDeleteConsult(select_consult){
+    async executeDeleteConsult(delete_consult,values){
         try{
-            const queryResponse = await this.pool.query(select_consult);
+            const queryResponse = await this.pool.query(delete_consult, values);
             this.lastDeleteDBResponse = queryResponse;
         }catch(error){
             console.log(error);

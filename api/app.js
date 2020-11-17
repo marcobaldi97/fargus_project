@@ -28,6 +28,7 @@ app.use("/testAPI", testAPIRouter);
 app.use("/publications", publicationsRouter);
 app.use("/publications/publish/", publicationsRouter);
 app.use("/publications/list/", publicationsRouter);
+app.use("/publications/deletePost/", publicationsRouter);
 //---------------------------------------------------------
 
 // catch 404 and forward to error handler

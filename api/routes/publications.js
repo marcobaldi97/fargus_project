@@ -30,7 +30,6 @@ router.get('/', function(req, res, next) {
 
 router.post('/list/', async function(req, res, next) {
   try{
-    let index = req.body.itemToSearch;
     let dbm = new DataBaseMediator();
     await dbm.executeSelectConsult('SELECT * FROM publications');
     let rowsToList = dbm.getLastSelectDBResponse();
@@ -63,15 +62,16 @@ router.post('/publish/', function(req, res, next) {
 
 router.post('/deletePost/', function(req, res, next) {
   try{
-    let dbm = new dataBaseMediator();
-    let textToInput = req.body.idToDelete;
-    const text = 'DELETE FROM publications WHERE id_publication = $1;'
-    const values = [textToInput];
+    let dbm = new DataBaseMediator();
+    let idToDelete = req.body.idToDelete;
+    const text = 'DELETE FROM publications WHERE publication_id=$1;'
+    const values = [idToDelete];
     dbm.executeDeleteConsult(text, values);
-    console.log('publication deleted.')
+    console.log('publication deleted.');
+    res.send('Publication with id='+idToDelete+' deleted.');
   }catch(err){
     let errResponse = 'Something wrong happened in /deletePost/';
-    console.log(errResponse);
+    console.log(err);
     res.send(errResponse);
   }
 });//to test

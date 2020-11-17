@@ -29,9 +29,21 @@ class PublicationViewer extends React.Component {
   }
 
   deleteRecord(itemToDelete){
-    //txt
-
-    console.log('Deleted '+itemToDelete+'!');
+    try{
+      let params = {
+        idToDelete: itemToDelete
+      };
+      axios
+      .post('/publications/publish/deletePost/', params)//url + parametros
+      .then(response=>{
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);//codigo de que hacer en caso de error.
+      });
+    }catch(err){
+      console.log(err);
+    }
   }
 
   printItems(elements){
@@ -39,7 +51,7 @@ class PublicationViewer extends React.Component {
     const tributeArray = [];
     for (let i = 0; i < elements.length; i++) {
       tributeArray.push(
-        <tr>
+        <tr id={elements[i].publication_id}>
           <td>{elements[i].publication_id}</td>
           <td>{elements[i].publication_content}</td>
           <td><Button onClick={() => this.deleteRecord(elements[i].publication_id)} variant="danger">Delete</Button></td>
