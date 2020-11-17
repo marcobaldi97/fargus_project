@@ -1,7 +1,8 @@
 const { text } = require('express');
 var express = require('express');
 var router = express.Router();
-import dataBaseMediator from '../clases/dataBaseMediator';
+
+var DataBaseMediator = require("../clases/dataBaseMediator");
 
 /* GET home page. */
 var miMapa = new Map();
@@ -16,7 +17,7 @@ function saveInMap(content) {
 
 function parseMapToArray(){
   const arrayToReturn = new Array();
-  for (var i = 0; i<counter; i++){
+  for (let i = 0; i<counter; i++){
     arrayToReturn[i] = miMapa.get(i);
   }
   return arrayToReturn;
@@ -30,18 +31,18 @@ router.get('/', function(req, res, next) {
 router.post('/list/', function(req, res, next) {
   try{
     let index = req.body.itemToSearch;
-    if(req.body.itemToSearch <= counter) {
+    if(index <= counter) {
       /*var responseObject = {
         postId : req.body.itemToSearch,
         postContent : miMapa.get(req.body.itemToSearch)
       };*/
-      var responseObject = {
+      let responseObject = {
         arraySize: counter,
         arrayOfPublications: parseMapToArray()
       };
       res.send(responseObject);
     } else {
-      var responseObject = {
+      let responseObject = {
         postId : req.body.itemToSearch,
         postContent : 'Out of Boundries'
       };
@@ -50,26 +51,24 @@ router.post('/list/', function(req, res, next) {
     }
     
   }catch(err){
-    var errResponse = 'Something wrong happened in /list';
+    let errResponse = 'Something wrong happened in /list';
     console.log(errResponse);
     res.send(errResponse);
   }
 });
 
 router.post('/publish/', function(req, res, next) {
-  var textToInput = req.body.textToInput;
+  let textToInput = req.body.textToInput;
   try{
-    //--------------------------↓↓For debugging↓↓-----------------------------
-    //console.log(textToInput);
-    /*for (var [clave, valor] of miMapa) {
-      console.log(clave + " = " + valor);
-    }*/
-    //--------------------------↑↑For debugging↑↑-----------------------------
-    saveInMap(textToInput);
-    res.send('All green');//El final.
+    let dbm = new DataBaseMediator();
+    const text = 'INSERT INTO publications(publication_content) VALUES($1);';
+    const values = [textToInput];
+    dbm.executeInsertConsult(text, values);
+    res.send('All cool');//El final.
   }catch(err){
     res.send('Something went wrong!');
     console.log('wrong in /publish/');
+    console.log(err);
   }
 });
 
@@ -81,7 +80,7 @@ router.post('/deletePost/', function(req, res, next) {
     dbm.executeDeleteConsult(queryToDelete);
     console.log('publication deleted.')
   }catch(err){
-    var errResponse = 'Something wrong happened in /deletePost/';
+    let errResponse = 'Something wrong happened in /deletePost/';
     console.log(errResponse);
     res.send(errResponse);
   }

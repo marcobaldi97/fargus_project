@@ -1,7 +1,7 @@
 const { json } = require('express');
 const  {Pool, Client} = require('pg');
 
-export class dataBaseMediator{ 
+module.exports = class DataBaseMediator{ 
     constructor (){
         let lastSelectDBResponse;
         let lastInsertDBResponse;
@@ -33,9 +33,9 @@ export class dataBaseMediator{
         }   
     }
 
-    async executeInsertConsult(insert_consult){
+    async executeInsertConsult(insert_consult, values){
         try{
-            const queryResponse = await this.pool.query(insert_consult);
+            const queryResponse = await this.pool.query(insert_consult, values);
             this.lastInsertDBResponse = queryResponse;
         }catch(error){
             console.log(error);
