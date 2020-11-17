@@ -34,13 +34,14 @@ class PublicationViewer extends React.Component {
         idToDelete: itemToDelete
       };
       axios
-      .post('/publications/publish/deletePost/', params)//url + parametros
-      .then(response=>{
-        console.log(response.data);
-      })
-      .catch(err => {
-        console.log(err);//codigo de que hacer en caso de error.
-      });
+        .post('/publications/publish/deletePost/', params)//url + parametros
+        .then(response=>{
+          console.log(response.data);
+          this.handleSubmit();
+        })
+        .catch(err => {
+          console.log(err);//codigo de que hacer en caso de error.
+        });
     }catch(err){
       console.log(err);
     }

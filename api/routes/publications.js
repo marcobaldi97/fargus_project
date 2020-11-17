@@ -39,7 +39,7 @@ router.post('/list/', async function(req, res, next) {
     };
     res.send(responseObject);
   }catch(err){
-    let errResponse = 'Something wrong happened in /list';
+    let errResponse = 'Something wrong happened in /list/';
     console.log(errResponse);
     res.send(errResponse);
   }
@@ -54,7 +54,7 @@ router.post('/publish/', function(req, res, next) {
     dbm.executeInsertConsult(text, values);
     res.send('All cool');//El final.
   }catch(err){
-    res.send('Something went wrong!');
+    res.send('Something went wrong! /publish/');
     console.log('wrong in /publish/');
     console.log(err);
   }
