@@ -28,28 +28,17 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/list/', function(req, res, next) {
+router.post('/list/', async function(req, res, next) {
   try{
     let index = req.body.itemToSearch;
-    if(index <= counter) {
-      /*var responseObject = {
-        postId : req.body.itemToSearch,
-        postContent : miMapa.get(req.body.itemToSearch)
-      };*/
-      let responseObject = {
-        arraySize: counter,
-        arrayOfPublications: parseMapToArray()
-      };
-      res.send(responseObject);
-    } else {
-      let responseObject = {
-        postId : req.body.itemToSearch,
-        postContent : 'Out of Boundries'
-      };
-      res.send(responseObject);
-      console.log('Requested index is out of boundries')
-    }
-    
+    let dbm = new DataBaseMediator();
+    await dbm.executeSelectConsult('SELECT * FROM publications');
+    let rowsToList = dbm.getLastSelectDBResponse();
+    let responseObject = {
+      arraySize: rowsToList.lenght,
+      arrayOfPublications: rowsToList
+    };
+    res.send(responseObject);
   }catch(err){
     let errResponse = 'Something wrong happened in /list';
     console.log(errResponse);
@@ -70,20 +59,21 @@ router.post('/publish/', function(req, res, next) {
     console.log('wrong in /publish/');
     console.log(err);
   }
-});
+});//Working
 
 router.post('/deletePost/', function(req, res, next) {
   try{
     let dbm = new dataBaseMediator();
     let textToInput = req.body.idToDelete;
-    const queryToDelete = 'DELETE FROM publications WHERE id_publication = '+textToInput+';'
-    dbm.executeDeleteConsult(queryToDelete);
+    const text = 'DELETE FROM publications WHERE id_publication = $1;'
+    const values = [textToInput];
+    dbm.executeDeleteConsult(text, values);
     console.log('publication deleted.')
   }catch(err){
     let errResponse = 'Something wrong happened in /deletePost/';
     console.log(errResponse);
     res.send(errResponse);
   }
-});
+});//to test
 
 module.exports = router;

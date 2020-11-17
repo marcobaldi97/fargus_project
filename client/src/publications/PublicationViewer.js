@@ -37,15 +37,15 @@ class PublicationViewer extends React.Component {
   printItems(elements){
     this.setState({items: []});//wash your hands(array) before entering this house!
     const tributeArray = [];
-    for (const [index, value] of elements.entries()) {
+    for (let i = 0; i < elements.length; i++) {
       tributeArray.push(
         <tr>
-          <td>{index}</td>
-          <td>{value}</td>
-          <td><Button onClick={() => this.deleteRecord(index)} variant="danger">Delete</Button></td>
+          <td>{elements[i].publication_id}</td>
+          <td>{elements[i].publication_content}</td>
+          <td><Button onClick={() => this.deleteRecord(elements[i].publication_id)} variant="danger">Delete</Button></td>
         </tr>
-      );//end array. Using => to pass a parameter is insanity
-    }//for some reason I cannot push into th  e array inside the state
+      );
+    }
     this.setState({items: this.state.items.concat(tributeArray)});
   }
 
@@ -59,8 +59,6 @@ class PublicationViewer extends React.Component {
       .then(response=>{
         console.log(response.data);
         this.printItems(response.data.arrayOfPublications);
-        this.setState({post_id: response.data.postId});
-        this.setState({post_content: response.data.postContent}); //deprecated
       })
       .catch(err => {
         console.log(err);//codigo de que hacer en caso de error.
