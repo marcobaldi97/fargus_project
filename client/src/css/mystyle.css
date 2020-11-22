@@ -3,7 +3,6 @@
 }
 .fullPage {
     height: 100%;
-    position: absolute;
     left: 0;
     width: 100%;
     overflow: hidden;
@@ -15,3 +14,14 @@ html {
   body {
     min-height: 100%;
   }
+
+.letMeSomeSpace{
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+
+.selfContainedWellPadded{
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+}

@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
-import { Container, Row, Col} from 'react-bootstrap';
+import { Container, Row, Col, InputGroup, FormControl, Alert} from 'react-bootstrap';
 
 class PublicationWriter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'Please write an essay about your favorite DOM element.'    
+      value: ''    
     };//this.state
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,7 +17,13 @@ class PublicationWriter extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('An essay was submitted: ' + this.state.value);
+    if (this.state.value === 'La Li Lu Le Lo'){
+      alert('The Patriots?');
+    }
+    if (this.state.value === 'The Patriots?'){
+      alert('La Li Lu Le Lo');
+    }
+    alert('A post shall be submitted: ' + this.state.value);
     let params = {
       textToInput : this.state.value
     }
@@ -25,6 +31,7 @@ class PublicationWriter extends React.Component {
       .post('/publications/publish/', params)//url + parametros
       .then(response=>{
         console.log(response);//codigo de que hacer con la respuesta.
+        this.setState({value: ''}); 
       })
       .catch(err => {
         console.log(err);//codigo de que hacer en caso de error.
@@ -36,14 +43,20 @@ class PublicationWriter extends React.Component {
     return (
       <Container fluid>
         <form onSubmit={this.handleSubmit}>
-        <Row>
-          <Col><label> Post </label></Col>
-        </Row>
-        <Row>
-          <Col ><textarea value={this.state.value} onChange={this.handleChange} /></Col>
-        </Row>
-        <Row>
-          <Col><input class="btn btn-outline-success" type="submit" value="Submit" /></Col>
+        <Row className="align-items-center letMeSomeSpace">
+          <Col xs={8}>
+            <InputGroup>
+              <InputGroup.Prepend>
+                <InputGroup.Text >Post:</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl as="textarea" aria-label="With textarea" value={this.state.value} onChange={this.handleChange} />
+            </InputGroup>
+          </Col>
+          <Col xs={4}>
+            <div className="alignMe">
+              <input className="btn btn-outline-success" type="submit" value="Submit" />
+            </div> 
+          </Col>
         </Row>
         </form>
       </Container>      

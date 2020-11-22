@@ -3,23 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-//my stuff ↓↓↓
-import Topnavbar from "./top-navbar/Topnavbar";
-import PublicationWriter from './publications/PublicationWriter';
-import PublicationViewer from './publications/PublicationViewer';
-//my stuff ↑↑↑
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/mystyle.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <div>
-      <Topnavbar />
-        <div className='mainPanel'>
+  <React.StrictMode>   
+    <div className='fullPage'>
           <App />
-          <PublicationWriter />
-          <PublicationViewer />
-        </div>
     </div>
   </React.StrictMode>,
   document.getElementById('root')
