@@ -45,13 +45,13 @@ router.post('/list/', async function(req, res, next) {
   }
 });
 
-router.post('/publish/', function(req, res, next) {
+router.post('/publish/', async function(req, res, next) {
   let textToInput = req.body.textToInput;
   try{
     let dbm = new DataBaseMediator();
     const text = 'INSERT INTO publications(publication_content) VALUES($1);';
     const values = [textToInput];
-    dbm.executeInsertConsult(text, values);
+    await dbm.executeInsertConsult(text, values); //Esto tendría que ser async
     res.send('All cool');//El final.
   }catch(err){
     res.send('Something went wrong! /publish/');
