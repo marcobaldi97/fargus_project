@@ -16,12 +16,33 @@ html {
   }
 
 .letMeSomeSpace{
-  padding-top: 3%;
-  padding-bottom: 3%;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
 .selfContainedWellPadded{
   padding-top: 3%;
   padding-bottom: 3%;
   padding-left: 3%;
+}
+
+.postCard{
+  width: '18rem'; 
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.imgInTable {
+  max-width: 150px;
+  max-height: 100px;
+}
+
+.publicationWriterBorders{
+  border: 5px solid  #f8f9fa !important;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+  padding-right: 3%;
 }

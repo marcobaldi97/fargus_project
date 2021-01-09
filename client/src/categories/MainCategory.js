@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Container, Row, Col, Table} from 'react-bootstrap';
+import { Button, Container, Row, Col, Card} from 'react-bootstrap';
 
-class PublicationViewer extends React.Component {
+class MainCategory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,12 +52,20 @@ class PublicationViewer extends React.Component {
     const tributeArray = [];
     for (let i = 0; i < elements.length; i++) {
       tributeArray.push(
-        <tr id={elements[i].publication_id}>
-          <td>{elements[i].publication_id}</td>
-          <td><img class="imgInTable" src={elements[i].imgsrc}></img></td>
-          <td>{elements[i].publication_content}</td>
-          <td><Button onClick={() => this.deleteRecord(elements[i].publication_id)} variant="danger">Delete</Button></td>
-        </tr>
+        <Col md={4} id={elements[i].publication_id}>
+          <div class="postCard">
+            <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src={elements[i].imgsrc} />
+            <Card.Body>
+                <Card.Title>#{elements[i].publication_id}</Card.Title>
+                <Card.Text>
+                  {elements[i].publication_content}
+                </Card.Text>
+                <Button variant="primary">View</Button>
+            </Card.Body>
+            </Card>
+          </div>
+        </Col>
       );
     }
     this.setState({items: this.state.items.concat(tributeArray)});
@@ -83,33 +91,12 @@ class PublicationViewer extends React.Component {
   render() {
     return (
       <Container id='Table' fluid>
+        <button class="btn btn-outline-success" onClick={this.handleSubmit}>Refresh</button>
         <Row>
-          <Col ><button class="btn btn-outline-success" onClick={this.handleSubmit}>Refresh</button></Col>
-          <Col ><button class="btn btn-outline-success" onClick={this.handleNext}>Next</button></Col>
-          <Col ><p>{this.state.current_value}</p></Col>
+          {this.state.items}
         </Row>
-        <Table bordered hover responsive>
-          <thead>
-            <tr>
-              <th>#PostId</th>
-              <th>Img</th>
-              <th>Content</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.items}
-          </tbody>
-        </Table>
       </Container>      
     );
   }
 }
-export default PublicationViewer;
-
-/* DUMP
-<tr>
-  <td>{this.state.post_id}</td>
-  <td>{this.state.post_content}</td>
-</tr>
-*/
+export default MainCategory;

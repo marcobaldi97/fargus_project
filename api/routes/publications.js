@@ -47,10 +47,11 @@ router.post('/list/', async function(req, res, next) {
 
 router.post('/publish/', async function(req, res, next) {
   let textToInput = req.body.textToInput;
+  let srcToInput = req.body.srcToInput;
   try{
     let dbm = new DataBaseMediator();
-    const text = 'INSERT INTO publications(publication_content) VALUES($1);';
-    const values = [textToInput];
+    const text = 'INSERT INTO publications(publication_content,imgsrc) VALUES($1,$2);';
+    const values = [textToInput, srcToInput];
     await dbm.executeInsertConsult(text, values); //Esto tendría que ser async
     res.send('All cool');//El final.
   }catch(err){

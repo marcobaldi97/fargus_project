@@ -7,6 +7,7 @@ import axios from 'axios';
 import Topnavbar from "./top-navbar/Topnavbar";
 import PublicationWriter from './publications/PublicationWriter';
 import PublicationViewer from './publications/PublicationViewer';
+import MainCategory from './categories/MainCategory';
 //my stuff ↑↑↑
 
 class App extends React.Component {
@@ -33,6 +34,13 @@ class App extends React.Component {
             <PublicationViewer /> 
           </div>
         );
+      case 'Main Category':
+        return(
+          <div id="appDiv">
+            <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
+            <MainCategory />
+          </div>
+        );  
       case '':
         return(
           <div id="appDiv">

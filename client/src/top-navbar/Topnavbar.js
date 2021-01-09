@@ -11,6 +11,7 @@ class Topnavbar extends React.Component {
           <Nav className="mr-auto">
             <NavDropdown title="Views" id="basic-nav-dropdown">
               <NavDropdown.Item onClick={() => handleToUpdate('Publications')} >Publications</NavDropdown.Item>
+              <NavDropdown.Item onClick={() => handleToUpdate('Main Category')} >Publications</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
