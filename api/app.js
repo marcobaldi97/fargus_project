@@ -29,6 +29,7 @@ app.use("/publications", publicationsRouter);
 app.use("/publications/publish/", publicationsRouter);
 app.use("/publications/list/", publicationsRouter);
 app.use("/publications/deletePost/", publicationsRouter);
+app.use("/publications/viewSinglePost/", publicationsRouter);
 //---------------------------------------------------------
 
 // catch 404 and forward to error handler

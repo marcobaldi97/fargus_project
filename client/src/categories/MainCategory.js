@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { Button, Container, Row, Col, Card} from 'react-bootstrap';
 
@@ -14,37 +14,11 @@ class MainCategory extends React.Component {
     };//this.state
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleNext = this.handleNext.bind(this);
     this.printItems = this.printItems.bind(this);
   }
 
   handleChange(event) {
     this.setState({value: event.target.value});  
-  }
-
-  handleNext(event){
-    let counter = this.state.current_value;
-    counter++;
-    this.setState({current_value: counter});
-  }
-
-  deleteRecord(itemToDelete){
-    try{
-      let params = {
-        idToDelete: itemToDelete
-      };
-      axios
-        .post('/publications/publish/deletePost/', params)//url + parametros
-        .then(response=>{
-          console.log(response.data);
-          this.handleSubmit();
-        })
-        .catch(err => {
-          console.log(err);//codigo de que hacer en caso de error.
-        });
-    }catch(err){
-      console.log(err);
-    }
   }
 
   printItems(elements){
@@ -61,7 +35,7 @@ class MainCategory extends React.Component {
                 <Card.Text>
                   {elements[i].publication_content}
                 </Card.Text>
-                <Button variant="primary">View</Button>
+                <Button variant="primary" onClick={() => this.props.handleToUpdate('Current post',elements[i].publication_id)}>View</Button>
             </Card.Body>
             </Card>
           </div>

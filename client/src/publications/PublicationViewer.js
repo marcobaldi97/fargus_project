@@ -53,8 +53,9 @@ class PublicationViewer extends React.Component {
     for (let i = 0; i < elements.length; i++) {
       tributeArray.push(
         <tr id={elements[i].publication_id}>
+          <td>{elements[i].publicationFather}</td>
           <td>{elements[i].publication_id}</td>
-          <td><img class="imgInTable" src={elements[i].imgsrc}></img></td>
+          <td><img class="imgInTable" src={elements[i].imgsrc} alt="\(-_-)/"></img></td>
           <td>{elements[i].publication_content}</td>
           <td><Button onClick={() => this.deleteRecord(elements[i].publication_id)} variant="danger">Delete</Button></td>
         </tr>
@@ -91,10 +92,11 @@ class PublicationViewer extends React.Component {
         <Table bordered hover responsive>
           <thead>
             <tr>
-              <th>#PostId</th>
-              <th>Img</th>
+              <th width="80">#ResTo</th>
+              <th width="80">#PostId</th>
+              <th width="100">Img</th>
               <th>Content</th>
-              <th>Delete</th>
+              <th width="80">Delete</th>
             </tr>
           </thead>
           <tbody>

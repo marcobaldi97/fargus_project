@@ -8,19 +8,21 @@ import Topnavbar from "./top-navbar/Topnavbar";
 import PublicationWriter from './publications/PublicationWriter';
 import PublicationViewer from './publications/PublicationViewer';
 import MainCategory from './categories/MainCategory';
+import PublicationSingleViewer from './publications/PublicationSingleViewer';
 //my stuff ↑↑↑
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      currentView: ''    
+      currentView: '',
+      currentPostId: ''    
     };//this.state
     this.handleToUpdateState  = this.handleToUpdate.bind(this);
   }
 
-  handleToUpdate(someArg){
-    this.setState({currentView:someArg});
+  handleToUpdate(someArg, post_id){
+    this.setState({currentView:someArg, currentPostId:post_id});
   }
 
   render(){
@@ -38,7 +40,14 @@ class App extends React.Component {
         return(
           <div id="appDiv">
             <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
-            <MainCategory />
+            <MainCategory handleToUpdate={handleToUpdate.bind(this)}/>
+          </div>
+        );  
+      case 'Current post':
+        return(
+          <div id="appDiv">
+            <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
+            <PublicationSingleViewer post_id={this.state.currentPostId}/>
           </div>
         );  
       case '':
