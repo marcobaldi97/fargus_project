@@ -1,17 +1,28 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Container, Table} from 'react-bootstrap';
+import { Button, Container, Table, Card} from 'react-bootstrap';
 
 class PublicationSingleViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       post_id : this.props.post_id,
-      items : []
+      imgsrc: '',
+      publication_content: '',
+      items: [],
+      loaded: false
     };//this.state
     this.refresh = this.refresh.bind(this);
     this.printItems = this.printItems.bind(this);
+    this.printFather = this.printFather.bind(this);
+    this.initialLoad = this.initialLoad.bind(this);
   }
+
+  initialLoad(){
+    if (!this.state.loaded) {
+      this.refresh();
+    };
+  };
 
   refresh(){
     try{
@@ -20,7 +31,7 @@ class PublicationSingleViewer extends React.Component {
         post_id: aux
       };
       axios
-        .post('/publications/viewSinglePost/', params)//url + parametros
+        .post('/publications/viewSinglePostResponses/', params)//url + parametros
         .then(response=>{
           this.printItems(response.data.arrayOfPublications)
         })
@@ -29,10 +40,35 @@ class PublicationSingleViewer extends React.Component {
         });
     }catch(err){
       console.log(err);
-    }
-  }
+    };
+    if (!this.state.loaded) {
+      try{
+        let aux = this.state.post_id;
+        let params = {
+          post_id: aux
+        };
+        axios
+          .post('/publications/viewSinglePost/', params)//url + parametros
+          .then(response=>{
+            this.printFather(response.data.arrayOfPublications)
+          })
+          .catch(err => {
+            console.log(err);//codigo de que hacer en caso de error.
+          });
+      }catch(err){
+        console.log(err);
+      };
+    };
+  };//refresh.
   
-  printItems(elements){
+  printFather(elements) {
+    console.log(elements[0]);
+    this.setState({publication_content : elements[0].publication_content});
+    this.setState({imgsrc : elements[0].imgsrc});
+    this.setState({loaded : true});
+  };//printFather
+
+  printItems(elements) {
     this.setState({items: []});//wash your hands(array) before entering this house!
     const tributeArray = [];
     for (let i = 0; i < elements.length; i++) {
@@ -50,8 +86,20 @@ class PublicationSingleViewer extends React.Component {
   }
 
   render() {
+    this.initialLoad();
     return (
       <div id='PublicationSingleViewerContainer'>
+        <div class="postCard">
+          <Card style={{ width: '18rem' }}>
+            <Card.Img variant="top" src={this.state.imgsrc} />
+            <Card.Body>
+                <Card.Title>#{this.state.post_id}</Card.Title>
+                <Card.Text>
+                  {this.state.publication_content}
+                </Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
         <Container id='Table' fluid>
           <p>{this.props.post_id}</p>
           <button class="btn btn-outline-success" onClick={this.refresh}>Refresh</button>          

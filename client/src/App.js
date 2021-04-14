@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './App.css';
-import axios from 'axios';
 
 //my stuff ↓↓↓
 import Topnavbar from "./top-navbar/Topnavbar";

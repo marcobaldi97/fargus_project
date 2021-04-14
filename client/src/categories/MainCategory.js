@@ -25,6 +25,11 @@ class MainCategory extends React.Component {
     this.setState({items: []});//wash your hands(array) before entering this house!
     const tributeArray = [];
     for (let i = 0; i < elements.length; i++) {
+      if (elements[i].publication_content.length > 250) {
+        elements[i].publication_content = elements[i].publication_content.substring(0,246);
+        var finalPoints = '...';
+        elements[i].publication_content = elements[i].publication_content + finalPoints;
+      };
       tributeArray.push(
         <Col md={4} id={elements[i].publication_id}>
           <div class="postCard">

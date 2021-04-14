@@ -77,7 +77,7 @@ router.post('/deletePost/', function(req, res, next) {
   }
 });//to test
 
-router.post('/viewSinglePost/', async function(req, res, next) {
+router.post('/viewSinglePostResponses/', async function(req, res, next) {
   try{
     console.log(req);
     let postId = req.body.post_id;
@@ -92,7 +92,27 @@ router.post('/viewSinglePost/', async function(req, res, next) {
     res.send(responseObject);
   }catch(err){
     console.log('Ups! '+err);
-    res.send('Somenthing went wrong in /viewSinglePost')
+    res.send('Somenthing went wrong in /viewSinglePostResponses')
+  }
+});
+module.exports = router;
+
+router.post('/viewSinglePost/', async function(req, res, next) {
+  try{
+    console.log(req);
+    let postId = req.body.post_id;
+    let dbm = new DataBaseMediator();
+    let consult = 'SELECT * FROM publications WHERE publication_id = '+postId+';';
+    await dbm.executeSelectConsult(consult);
+    let rowsToList = dbm.getLastSelectDBResponse();
+    let responseObject = {
+      arraySize: rowsToList.lenght,
+      arrayOfPublications: rowsToList
+    };
+    res.send(responseObject);
+  }catch(err){
+    console.log('Ups! '+err);
+    res.send('Somenthing went wrong in /viewSinglePostResponses')
   }
 });
 module.exports = router;
