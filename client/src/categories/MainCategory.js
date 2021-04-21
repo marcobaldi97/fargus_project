@@ -16,7 +16,7 @@ class MainCategory extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.printItems = this.printItems.bind(this);
   }
-
+  
   handleChange(event) {
     this.setState({value: event.target.value});  
   }
@@ -31,10 +31,10 @@ class MainCategory extends React.Component {
         elements[i].publication_content = elements[i].publication_content + finalPoints;
       };
       tributeArray.push(
-        <Col md={4} id={elements[i].publication_id}>
-          <div class="postCard">
-            <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={elements[i].imgsrc} />
+        <Col md={4} key={elements[i].publication_id}>
+          <div className="postCard">
+            <Card style={{ width: '18rem'}}>
+            <Card.Img className="imgInPostCard" variant="top" src={elements[i].imgsrc} />
             <Card.Body>
                 <Card.Title>#{elements[i].publication_id}</Card.Title>
                 <Card.Text>
@@ -54,11 +54,9 @@ class MainCategory extends React.Component {
     let params = {
       itemToSearch: this.state.current_value
     };
-    console.log(params.itemToSearch);
     axios
       .post('/publications/publish/list', params)//url + parametros
       .then(response=>{
-        console.log(response.data);
         this.printItems(response.data.arrayOfPublications);
       })
       .catch(err => {
@@ -70,7 +68,7 @@ class MainCategory extends React.Component {
   render() {
     return (
       <Container id='Table' fluid>
-        <button class="btn btn-outline-success" onClick={this.handleSubmit}>Refresh</button>
+        <button className="btn btn-outline-success" onClick={this.handleSubmit}>Refresh</button>
         <Row>
           {this.state.items}
         </Row>

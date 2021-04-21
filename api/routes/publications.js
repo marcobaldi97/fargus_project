@@ -79,7 +79,6 @@ router.post('/deletePost/', function(req, res, next) {
 
 router.post('/viewSinglePostResponses/', async function(req, res, next) {
   try{
-    console.log(req);
     let postId = req.body.post_id;
     let dbm = new DataBaseMediator();
     let consult = 'SELECT * FROM publications WHERE publication_father = '+postId+';';
@@ -99,7 +98,6 @@ module.exports = router;
 
 router.post('/viewSinglePost/', async function(req, res, next) {
   try{
-    console.log(req);
     let postId = req.body.post_id;
     let dbm = new DataBaseMediator();
     let consult = 'SELECT * FROM publications WHERE publication_id = '+postId+';';

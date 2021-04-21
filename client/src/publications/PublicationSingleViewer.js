@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Container, Table, Card} from 'react-bootstrap';
+import { Button, Container, Table, Card, Row, Col} from 'react-bootstrap';
 
 class PublicationSingleViewer extends React.Component {
   constructor(props) {
@@ -62,7 +62,6 @@ class PublicationSingleViewer extends React.Component {
   };//refresh.
   
   printFather(elements) {
-    console.log(elements[0]);
     this.setState({publication_content : elements[0].publication_content});
     this.setState({imgsrc : elements[0].imgsrc});
     this.setState({loaded : true});
@@ -73,7 +72,7 @@ class PublicationSingleViewer extends React.Component {
     const tributeArray = [];
     for (let i = 0; i < elements.length; i++) {
       tributeArray.push(
-        <tr id={elements[i].publication_id}>
+        <tr key={elements[i].publication_id}>
           <td>{elements[i].publicationFather}</td>
           <td>{elements[i].publication_id}</td>
           <td><img class="imgInTable" src={elements[i].imgsrc} alt="\(-_-)/"></img></td>
@@ -90,19 +89,28 @@ class PublicationSingleViewer extends React.Component {
     return (
       <div id='PublicationSingleViewerContainer'>
         <div class="postCard">
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={this.state.imgsrc} />
+          <Card>
+            <Card.Header>OP: {this.state.post_id}</Card.Header>
             <Card.Body>
-                <Card.Title>#{this.state.post_id}</Card.Title>
-                <Card.Text>
-                  {this.state.publication_content}
-                </Card.Text>
+            <Container fluid="md">
+            </Container>
+              <blockquote className="blockquote mb-0">
+                <Row>
+                  <Col md="auto">
+                    <img className="flexBox" src={this.state.imgsrc} alt="\(>.<)/"></img>
+                  </Col>
+                  <Col md="auto">
+                    <p>
+                      {this.state.publication_content}
+                    </p>
+                  </Col>
+                </Row>
+              </blockquote>
             </Card.Body>
           </Card>
         </div>
         <Container id='Table' fluid>
-          <p>{this.props.post_id}</p>
-          <button class="btn btn-outline-success" onClick={this.refresh}>Refresh</button>          
+          <button class="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh}>Refresh</button>          
           <Table bordered hover responsive>
             <thead>
               <tr>

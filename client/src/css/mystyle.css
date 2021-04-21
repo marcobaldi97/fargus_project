@@ -8,6 +8,10 @@
     overflow: hidden;
 }
 
+.flexBox {
+  display: flex;
+}
+
 html {
     height: 100%;
   }
@@ -15,9 +19,13 @@ html {
     min-height: 100%;
   }
 
-.letMeSomeSpace{
-  padding-top: 1%;
-  padding-bottom: 1%;
+.letMeSomeSpace {
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+
+.iNeedMoreMargins {
+  margin: 1% 1% 1% 1%;
 }
 
 .selfContainedWellPadded{
@@ -27,11 +35,16 @@ html {
 }
 
 .postCard{
-  width: '18rem'; 
+  max-height: 50%;
   padding-top: 3%;
   padding-bottom: 3%;
   padding-left: 3%;
   padding-right: 3%;
+}
+
+.imgInPostCard {
+  max-height: 90%;
+  max-width: 100%;
 }
 
 .imgInTable {
