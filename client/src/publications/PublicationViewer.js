@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Container, Row, Col, Table} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+
+import DynamicTablePublications from '../myComponents/DynamicTablePublications'
 
 class PublicationViewer extends React.Component {
   constructor(props) {
@@ -10,12 +12,17 @@ class PublicationViewer extends React.Component {
       value: '',
       post_id: '',
       post_content: '' ,
-      items: []   
+      items: [],
+      publications: [],
+      loaded: false,
     };//this.state
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.refresh = this.refresh.bind(this);
     this.handleNext = this.handleNext.bind(this);
     this.printItems = this.printItems.bind(this);
+    if (!this.state.loaded){
+      this.refresh();
+    };
   }
 
   handleChange(event) {
@@ -36,8 +43,7 @@ class PublicationViewer extends React.Component {
       axios
         .post('/publications/publish/deletePost/', params)//url + parametros
         .then(response=>{
-          console.log(response.data);
-          this.handleSubmit();
+          this.refresh();
         })
         .catch(err => {
           console.log(err);//codigo de que hacer en caso de error.
@@ -64,49 +70,31 @@ class PublicationViewer extends React.Component {
     this.setState({items: this.state.items.concat(tributeArray)});
   }
 
-  handleSubmit(event) {
+  refresh() {
+    this.setState({loaded: true});
     let params = {
       itemToSearch: this.state.current_value
     };
-    console.log(params.itemToSearch);
     axios
       .post('/publications/publish/list', params)//url + parametros
       .then(response=>{
-        console.log(response.data);
-        this.printItems(response.data.arrayOfPublications);
+        this.setState({publications: response.data.arrayOfPublications});
+        //this.printItems(response.data.arrayOfPublications);
       })
       .catch(err => {
         console.log(err);//codigo de que hacer en caso de error.
       });
-    event.preventDefault();
-  }
+  };
 
   render() {
     return (
-      <Container id='Table' fluid>
-        <Row>
-          <Col ><button class="btn btn-outline-success" onClick={this.handleSubmit}>Refresh</button></Col>
-          <Col ><button class="btn btn-outline-success" onClick={this.handleNext}>Next</button></Col>
-          <Col ><p>{this.state.current_value}</p></Col>
-        </Row>
-        <Table bordered hover responsive>
-          <thead>
-            <tr>
-              <th width="80">#ResTo</th>
-              <th width="80">#PostId</th>
-              <th width="100">Img</th>
-              <th>Content</th>
-              <th width="80">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.items}
-          </tbody>
-        </Table>
-      </Container>      
+      <div>
+        <button class="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh.bind()}>Refresh</button>
+        <DynamicTablePublications elements={this.state.publications} deleteRecord={this.deleteRecord.bind()} refresh={this.refresh.bind()}></DynamicTablePublications>
+      </div>    
     );
-  }
-}
+  };
+};
 export default PublicationViewer;
 
 /* DUMP

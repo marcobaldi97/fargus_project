@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 router.post('/list/', async function(req, res, next) {
   try{
     let dbm = new DataBaseMediator();
-    await dbm.executeSelectConsult('SELECT * FROM publications');
+    await dbm.executeSelectConsult('SELECT * FROM publications ORDER BY publication_id');
     let rowsToList = dbm.getLastSelectDBResponse();
     let responseObject = {
       arraySize: rowsToList.lenght,
@@ -46,17 +46,17 @@ router.post('/list/', async function(req, res, next) {
 });
 
 router.post('/publish/', async function(req, res, next) {
-  let textToInput = req.body.textToInput;
-  let srcToInput = req.body.srcToInput;
+  const textToInput = req.body.textToInput;
+  const srcToInput = req.body.srcToInput;
+  const fatherId = parseInt(req.body.responseTo);
   try{
     let dbm = new DataBaseMediator();
-    const text = 'INSERT INTO publications(publication_content,imgsrc) VALUES($1,$2);';
-    const values = [textToInput, srcToInput];
+    const text = 'INSERT INTO publications(publication_content,imgsrc, publication_father) VALUES($1,$2,$3);';
+    const values = [textToInput, srcToInput, fatherId];
     await dbm.executeInsertConsult(text, values); //Esto tendría que ser async
-    res.send('All cool');//El final.
   }catch(err){
     res.send('Something went wrong! /publish/');
-    console.log('wrong in /publish/');
+    console.log('Error in /publish/');
     console.log(err);
   }
 });//Working

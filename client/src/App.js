@@ -31,7 +31,7 @@ class App extends React.Component {
         return(
           <div id="appDiv">
             <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
-            <PublicationWriter />
+            <PublicationWriter fatherId='0'/>
             <PublicationViewer /> 
           </div>
         );

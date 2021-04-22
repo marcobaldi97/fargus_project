@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { Button, Container, Table, Card, Row, Col} from 'react-bootstrap';
+import { Container, Card, Row, Col} from 'react-bootstrap';
+
+import DynamicTablePublications from "../myComponents/DynamicTablePublications";
 
 class PublicationSingleViewer extends React.Component {
   constructor(props) {
@@ -10,13 +12,18 @@ class PublicationSingleViewer extends React.Component {
       imgsrc: '',
       publication_content: '',
       items: [],
+      publications: [],
       loaded: false
     };//this.state
     this.refresh = this.refresh.bind(this);
-    this.printItems = this.printItems.bind(this);
     this.printFather = this.printFather.bind(this);
     this.initialLoad = this.initialLoad.bind(this);
+    this.deleteRecord = this.deleteRecord.bind(this);
   }
+
+  deleteRecord(r){
+    console.log('record '+r+' deleted');
+  };
 
   initialLoad(){
     if (!this.state.loaded) {
@@ -33,7 +40,7 @@ class PublicationSingleViewer extends React.Component {
       axios
         .post('/publications/viewSinglePostResponses/', params)//url + parametros
         .then(response=>{
-          this.printItems(response.data.arrayOfPublications)
+          this.setState({publications: response.data.arrayOfPublications})
         })
         .catch(err => {
           console.log(err);//codigo de que hacer en caso de error.
@@ -67,23 +74,6 @@ class PublicationSingleViewer extends React.Component {
     this.setState({loaded : true});
   };//printFather
 
-  printItems(elements) {
-    this.setState({items: []});//wash your hands(array) before entering this house!
-    const tributeArray = [];
-    for (let i = 0; i < elements.length; i++) {
-      tributeArray.push(
-        <tr key={elements[i].publication_id}>
-          <td>{elements[i].publicationFather}</td>
-          <td>{elements[i].publication_id}</td>
-          <td><img class="imgInTable" src={elements[i].imgsrc} alt="\(-_-)/"></img></td>
-          <td>{elements[i].publication_content}</td>
-          <td><Button onClick={() => this.deleteRecord(elements[i].publication_id)} variant="danger">Delete</Button></td>
-        </tr>
-      );
-    }
-    this.setState({items: this.state.items.concat(tributeArray)});
-  }
-
   render() {
     this.initialLoad();
     return (
@@ -109,8 +99,17 @@ class PublicationSingleViewer extends React.Component {
             </Card.Body>
           </Card>
         </div>
-        <Container id='Table' fluid>
-          <button class="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh}>Refresh</button>          
+        <button class="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh}>Refresh</button> 
+        <DynamicTablePublications elements={this.state.publications} refresh={this.refresh.bind()} deleteRecord={this.deleteRecord.bind()}></DynamicTablePublications>
+      </div>
+    );
+  }
+}
+export default PublicationSingleViewer;
+
+
+/*
+<Container id='Table' fluid>    
           <Table bordered hover responsive>
             <thead>
               <tr>
@@ -125,10 +124,5 @@ class PublicationSingleViewer extends React.Component {
               {this.state.items}
             </tbody>
           </Table>
-        </Container> 
-      </div>
-     
-    );
-  }
-}
-export default PublicationSingleViewer;
+        </Container>
+*/
