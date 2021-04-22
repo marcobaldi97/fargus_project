@@ -6,7 +6,7 @@ class MainCategory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current_value: 1,
+      current_value: 0,
       value: '',
       post_id: '',
       post_content: '' ,
@@ -25,17 +25,18 @@ class MainCategory extends React.Component {
     this.setState({items: []});//wash your hands(array) before entering this house!
     const tributeArray = [];
     for (let i = 0; i < elements.length; i++) {
-      if (elements[i].publication_content.length > 250) {
-        elements[i].publication_content = elements[i].publication_content.substring(0,246);
+      const desiredLength = 80;
+      if (elements[i].publication_content.length > desiredLength) {
+        elements[i].publication_content = elements[i].publication_content.substring(0,desiredLength-3);
         var finalPoints = '...';
         elements[i].publication_content = elements[i].publication_content + finalPoints;
       };
       tributeArray.push(
         <Col md={4} key={elements[i].publication_id}>
           <div className="postCard">
-            <Card style={{ width: '18rem'}}>
+            <Card border='success' style={{ width: '18rem'}}>
             <Card.Img className="imgInPostCard" variant="top" src={elements[i].imgsrc} />
-            <Card.Body>
+            <Card.Body >
                 <Card.Title>#{elements[i].publication_id}</Card.Title>
                 <Card.Text>
                   {elements[i].publication_content}
@@ -68,8 +69,8 @@ class MainCategory extends React.Component {
   render() {
     return (
       <Container id='Table' fluid>
-        <button className="btn btn-outline-success" onClick={this.handleSubmit}>Refresh</button>
-        <Row>
+        <button className="btn btn-outline-success iNeedMoreMargins" onClick={this.handleSubmit}>Refresh</button>
+        <Row className="publicationCard3way">
           {this.state.items}
         </Row>
       </Container>      

@@ -61,7 +61,7 @@ class PublicationViewer extends React.Component {
         <tr id={elements[i].publication_id}>
           <td>{elements[i].publicationFather}</td>
           <td>{elements[i].publication_id}</td>
-          <td><img class="imgInTable" src={elements[i].imgsrc} alt="\(-_-)/"></img></td>
+          <td><img className="imgInTable" src={elements[i].imgsrc} alt="\(-_-)/"></img></td>
           <td>{elements[i].publication_content}</td>
           <td><Button onClick={() => this.deleteRecord(elements[i].publication_id)} variant="danger">Delete</Button></td>
         </tr>
@@ -89,7 +89,7 @@ class PublicationViewer extends React.Component {
   render() {
     return (
       <div>
-        <button class="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh.bind()}>Refresh</button>
+        <button className="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh.bind()}>Refresh</button>
         <DynamicTablePublications elements={this.state.publications} deleteRecord={this.deleteRecord.bind()} refresh={this.refresh.bind()}></DynamicTablePublications>
       </div>    
     );

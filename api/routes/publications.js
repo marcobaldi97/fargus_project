@@ -30,8 +30,9 @@ router.get('/', function(req, res, next) {
 
 router.post('/list/', async function(req, res, next) {
   try{
+    const publicationId = req.body.itemToSearch;
     let dbm = new DataBaseMediator();
-    await dbm.executeSelectConsult('SELECT * FROM publications ORDER BY publication_id');
+    await dbm.executeSelectConsult('SELECT * FROM publications WHERE publication_father = '+publicationId+' ORDER BY publication_id');
     let rowsToList = dbm.getLastSelectDBResponse();
     let responseObject = {
       arraySize: rowsToList.lenght,
@@ -81,7 +82,7 @@ router.post('/viewSinglePostResponses/', async function(req, res, next) {
   try{
     let postId = req.body.post_id;
     let dbm = new DataBaseMediator();
-    let consult = 'SELECT * FROM publications WHERE publication_father = '+postId+';';
+    let consult = 'SELECT * FROM publications WHERE publication_father = '+postId+' ORDER BY publication_id;';
     await dbm.executeSelectConsult(consult);
     let rowsToList = dbm.getLastSelectDBResponse();
     let responseObject = {

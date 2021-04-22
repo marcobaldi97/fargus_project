@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import { Container, Card, Row, Col} from 'react-bootstrap';
+import { Container, Card, Row, Col, Button, Accordion} from 'react-bootstrap';
 
 import DynamicTablePublications from "../myComponents/DynamicTablePublications";
+import PublicationWriter from "./PublicationWriter";
 
 class PublicationSingleViewer extends React.Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class PublicationSingleViewer extends React.Component {
     this.initialLoad();
     return (
       <div id='PublicationSingleViewerContainer'>
-        <div class="postCard">
+        <div class="fatherCard">
           <Card>
             <Card.Header>OP: {this.state.post_id}</Card.Header>
             <Card.Body>
@@ -98,6 +99,22 @@ class PublicationSingleViewer extends React.Component {
               </blockquote>
             </Card.Body>
           </Card>
+        </div>
+        <div className="respondClass">
+          <Accordion>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="btn btn-outline-success" eventKey="0">
+                  Respond
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  <PublicationWriter fatherId={this.state.post_id}/>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
         </div>
         <button class="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh}>Refresh</button> 
         <DynamicTablePublications elements={this.state.publications} refresh={this.refresh.bind()} deleteRecord={this.deleteRecord.bind()}></DynamicTablePublications>
