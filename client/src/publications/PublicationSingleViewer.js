@@ -71,7 +71,7 @@ class PublicationSingleViewer extends React.Component {
   
   printFather(elements) {
     this.setState({publication_content : elements[0].publication_content});
-    this.setState({imgsrc : elements[0].imgsrc});
+    this.setState({imgsrc : elements[0].image_file});
     this.setState({loaded : true});
   };//printFather
 
@@ -88,7 +88,7 @@ class PublicationSingleViewer extends React.Component {
               <blockquote className="blockquote mb-0">
                 <Row>
                   <Col md="auto">
-                    <img className="flexBox" src={this.state.imgsrc} alt="\(>.<)/"></img>
+                    <img className="flexBox fatherImg" src={this.state.imgsrc} alt="\(>.<)/"></img>
                   </Col>
                   <Col md="auto">
                     <p>
@@ -123,23 +123,3 @@ class PublicationSingleViewer extends React.Component {
   }
 }
 export default PublicationSingleViewer;
-
-
-/*
-<Container id='Table' fluid>    
-          <Table bordered hover responsive>
-            <thead>
-              <tr>
-                <th width="80">#ResTo</th>
-                <th width="80">#PostId</th>
-                <th width="100">Img</th>
-                <th>Content</th>
-                <th width="80">Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.items}
-            </tbody>
-          </Table>
-        </Container>
-*/

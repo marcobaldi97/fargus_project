@@ -35,7 +35,7 @@ class MainCategory extends React.Component {
         <Col md={4} key={elements[i].publication_id}>
           <div className="postCard">
             <Card border='success' style={{ width: '18rem'}}>
-            <Card.Img className="imgInPostCard" variant="top" src={elements[i].imgsrc} />
+            <Card.Img className="imgInPostCard" variant="top" src={elements[i].image_file} />
             <Card.Body >
                 <Card.Title>#{elements[i].publication_id}</Card.Title>
                 <Card.Text>
