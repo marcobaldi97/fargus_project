@@ -8,7 +8,7 @@ class PublicationViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      current_value: 1,
+      current_value: 0,
       value: '',
       post_id: '',
       post_content: '' ,

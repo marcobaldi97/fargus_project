@@ -7,14 +7,28 @@ import axios from 'axios';
  * Ex.:elements={this.state.publications} refresh={this.refresh.bind()} deleteRecord={this.deleteRecord.bind()}
  */
 class DynamicTablePublications extends React.Component {
+  arrayBufferToBase64(buffer) {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    };
+    return window.btoa(binary);
+  }
+  
   printItems(elements){
       const tributeArray = [];
       for (let i = 0; i < elements.length; i++) {
+        console.log(elements[i].image_file);
+        let base64boi = elements[i].image_file;//Fuuuuuuuck!
+        let imgToShow = base64boi;
+        //let imgToShow = elements[i].imgsrc;
         tributeArray.push(
           <tr key={elements[i].publication_id}>
             <td>{elements[i].publicationFather}</td>
             <td>{elements[i].publication_id}</td>
-            <td><img className="imgInTable" src={elements[i].imgsrc} alt="\(-_-)/"></img></td>
+            <td><img className="imgInTable" src={imgToShow} alt="a"></img></td>
             <td>{elements[i].publication_content}</td>
             <td><Button onClick={() => this.deleteRecord(elements[i].publication_id)} variant="danger">Delete</Button></td>
           </tr>
