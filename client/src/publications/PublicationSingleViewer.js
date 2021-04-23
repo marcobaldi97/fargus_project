@@ -75,11 +75,18 @@ class PublicationSingleViewer extends React.Component {
     this.setState({loaded : true});
   };//printFather
 
+  changeImgSize(event) {
+    console.log("here!");
+    const currentClasses = event.target.className;
+    if (currentClasses === "flexBox fatherImg") event.target.className = "flexBox fatherImgExpand";
+    else event.target.className = "flexBox fatherImg";
+  }
+
   render() {
     this.initialLoad();
     return (
       <div id='PublicationSingleViewerContainer'>
-        <div class="fatherCard">
+        <div className="cardFather">
           <Card>
             <Card.Header>OP: {this.state.post_id}</Card.Header>
             <Card.Body>
@@ -88,7 +95,7 @@ class PublicationSingleViewer extends React.Component {
               <blockquote className="blockquote mb-0">
                 <Row>
                   <Col md="auto">
-                    <img className="flexBox fatherImg" src={this.state.imgsrc} alt="\(>.<)/"></img>
+                    <img className="flexBox fatherImg" src={this.state.imgsrc} alt="\(>.<)/" onClick={this.changeImgSize}></img>
                   </Col>
                   <Col md="auto">
                     <p>
@@ -100,7 +107,7 @@ class PublicationSingleViewer extends React.Component {
             </Card.Body>
           </Card>
         </div>
-        <div className="respondClass">
+        <div className="cardFather respondClass">
           <Accordion>
             <Card>
               <Card.Header>
@@ -116,8 +123,12 @@ class PublicationSingleViewer extends React.Component {
             </Card>
           </Accordion>
         </div>
-        <button class="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh}>Refresh</button> 
-        <DynamicTablePublications elements={this.state.publications} refresh={this.refresh.bind()} deleteRecord={this.deleteRecord.bind()}></DynamicTablePublications>
+        <div className="cardFather">
+          <button className="btn btn-outline-success" onClick={this.refresh}>Refresh</button> 
+        </div>
+        <div className="cardFather">
+          <DynamicTablePublications className="c5pxmarginstop" elements={this.state.publications} refresh={this.refresh.bind()} deleteRecord={this.deleteRecord.bind()}></DynamicTablePublications>
+        </div>
       </div>
     );
   }

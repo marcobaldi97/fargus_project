@@ -55,7 +55,8 @@ class App extends React.Component {
             <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
             <div className="selfContainedWellPadded">
               <p>The Objective of this APP is to show the skills I'm learning in React+Express+Node.js+PostgreSQL</p>
-              <p>Please go to: Views/Publications</p>
+              <p>Please go to: Views/Publications to create "Father" publications.</p>
+              <p>The database backup is the FARGUS_PROJECT github. The original was created on PostgreSQL.</p>
             </div>
           </div>
         );

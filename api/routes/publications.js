@@ -5,24 +5,6 @@ var router = express.Router();
 var DataBaseMediator = require("../clases/dataBaseMediator");
 
 /* GET home page. */
-var miMapa = new Map();
-miMapa.set(0, "Este es el cero en el map");
-miMapa.set(1, "you are a loser");
-var counter = 2; 
-
-function saveInMap(content) {
-    miMapa.set(counter, content);
-    counter++;
-}
-
-function parseMapToArray(){
-  const arrayToReturn = new Array();
-  for (let i = 0; i<counter; i++){
-    arrayToReturn[i] = miMapa.get(i);
-  }
-  return arrayToReturn;
-}// Angry note: arrays in JavaScript are trash! Why do I have to search 5 fking pages to found a not alien
-//              alien syntax of a textbook array? 
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -48,13 +30,12 @@ router.post('/list/', async function(req, res, next) {
 
 router.post('/publish/', async function(req, res, next) {
   const textToInput = req.body.textToInput;
-  const srcToInput = req.body.srcToInput;
   const fatherId = parseInt(req.body.responseTo);
   const imgFile = req.body.imgFile;
   try{
     let dbm = new DataBaseMediator();
-    const text = 'INSERT INTO publications(publication_content,imgsrc, publication_father, image_file) VALUES($1,$2,$3,$4);';
-    const values = [textToInput, srcToInput, fatherId, imgFile];
+    const text = 'INSERT INTO publications(publication_content, publication_father, image_file) VALUES($1,$2,$3);';
+    const values = [textToInput, fatherId, imgFile];
     await dbm.executeInsertConsult(text, values); //Esto tendría que ser async
   }catch(err){
     res.send('Something went wrong! /publish/');

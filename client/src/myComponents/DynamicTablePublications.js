@@ -20,13 +20,11 @@ class DynamicTablePublications extends React.Component {
   printItems(elements){
       const tributeArray = [];
       for (let i = 0; i < elements.length; i++) {
-        console.log(elements[i].image_file);
         let base64boi = elements[i].image_file;//Fuuuuuuuck!
         let imgToShow = base64boi;
         //let imgToShow = elements[i].imgsrc;
         tributeArray.push(
           <tr key={elements[i].publication_id}>
-            <td>{elements[i].publicationFather}</td>
             <td>{elements[i].publication_id}</td>
             <td><img className="imgInTable" src={imgToShow} alt="a"></img></td>
             <td>{elements[i].publication_content}</td>
@@ -62,7 +60,6 @@ class DynamicTablePublications extends React.Component {
             <Table bordered hover responsive>
               <thead>
                 <tr>
-                  <th width="80">#ResTo</th>
                   <th width="80">#PostId</th>
                   <th width="100">Img</th>
                   <th>Content</th>

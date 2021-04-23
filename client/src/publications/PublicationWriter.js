@@ -10,7 +10,8 @@ class PublicationWriter extends React.Component {
       value: '',
       valueImg: '',
       fatherId: fatherIdWaited,
-      selectedFile: null
+      selectedFile: null,
+      readyToSubmit: true
     };//this.state
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeImg = this.handleChangeImg.bind(this);
@@ -31,8 +32,12 @@ class PublicationWriter extends React.Component {
   };
  
   async handleChangeImg(event) {
+    this.setState({readyToSubmit: false});
+    const beginT = performance.now();
     const fileArray = await this.getBase64(event.target.files[0]);
-    this.setState({selectedFile: fileArray, valueImg: event.target.value});
+    const endT = performance.now();
+    console.log("Time taken to getBase64: "+(endT - beginT)+"ms");
+    this.setState({selectedFile: fileArray, valueImg: event.target.value, readyToSubmit: false});
   };
 
   handleSubmit(event) {
@@ -74,7 +79,7 @@ class PublicationWriter extends React.Component {
           </Col>
         </Row>
         <Row className="align-items-center letMeSomeSpace publicationWriterImageSource">
-          <Col xs={10}>
+          <Col xs={6}>
             <InputGroup>
               <InputGroup.Prepend>
                 <InputGroup.Text >Image Source:</InputGroup.Text>
@@ -84,8 +89,11 @@ class PublicationWriter extends React.Component {
           </Col>
           <Col xs={2}>
             <div className="alignMe">
-              <input disabled={this.state.submitDisable} className="btn btn-outline-success" type="submit" value="Submit" />
+              <input disabled={this.state.readyToSubmit} className="btn btn-outline-success" type="submit" value="Submit" />
             </div> 
+          </Col>
+          <Col xs={4}>
+            <img src={this.state.selectedFile} className="previewImg" alt="Preview..."></img>
           </Col>
         </Row>
         </form>
