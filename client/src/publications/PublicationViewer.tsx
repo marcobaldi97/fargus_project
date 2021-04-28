@@ -3,9 +3,24 @@ import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
 import DynamicTablePublications from '../myComponents/DynamicTablePublications'
+import PublicationWriter from "./PublicationWriter";
 
-class PublicationViewer extends React.Component {
-  constructor(props) {
+interface Props {
+
+}
+
+interface State {
+  current_value:number,
+  value:string,
+  post_id:string,
+  post_content:string,
+  items:any,
+  publications:[],
+  loaded:boolean
+}
+
+class PublicationViewer extends React.Component<Props, State> {
+  constructor(props:Props) {
     super(props);
     this.state = {
       current_value: 0,
@@ -25,17 +40,17 @@ class PublicationViewer extends React.Component {
     };
   }
 
-  handleChange(event) {
+  handleChange(event:any) {
     this.setState({value: event.target.value});  
   }
 
-  handleNext(event){
+  handleNext(event:any){
     let counter = this.state.current_value;
     counter++;
     this.setState({current_value: counter});
   }
 
-  deleteRecord(itemToDelete){
+  deleteRecord(itemToDelete:number){
     try{
       let params = {
         idToDelete: itemToDelete
@@ -53,7 +68,7 @@ class PublicationViewer extends React.Component {
     }
   }
 
-  printItems(elements){
+  printItems(elements:any){
     this.setState({items: []});//wash your hands(array) before entering this house!
     const tributeArray = [];
     for (let i = 0; i < elements.length; i++) {
@@ -89,8 +104,9 @@ class PublicationViewer extends React.Component {
   render() {
     return (
       <div>
-        <button className="btn btn-outline-success iNeedMoreMargins" onClick={this.refresh.bind()}>Refresh</button>
-        <DynamicTablePublications elements={this.state.publications} deleteRecord={this.deleteRecord.bind()} refresh={this.refresh.bind()}></DynamicTablePublications>
+        <PublicationWriter fatherId='0' refresh={() => this.refresh}/>{/*esto a moverlo adentro de viewer*/}
+        <button className="btn btn-outline-success iNeedMoreMargins" onClick={() => this.refresh}> Refresh </button>
+        <DynamicTablePublications elements={this.state.publications} deleteRecord={() => this.deleteRecord} refresh={() => this.refresh}></DynamicTablePublications>
       </div>    
     );
   };

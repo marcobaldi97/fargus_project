@@ -4,34 +4,47 @@ import './App.css';
 
 //my stuff ↓↓↓
 import Topnavbar from "./top-navbar/Topnavbar";
-import PublicationWriter from './publications/PublicationWriter';
 import PublicationViewer from './publications/PublicationViewer';
 import MainCategory from './categories/MainCategory';
 import PublicationSingleViewer from './publications/PublicationSingleViewer';
 //my stuff ↑↑↑
 
-class App extends React.Component {
-  constructor(props){
+interface Props {
+};//no real props here
+
+interface State {
+  currentView: string;
+  currentPostId: string;
+}
+
+class App extends React.Component<Props, State> {
+  handleToUpdateState:any;
+  constructor(props:any){
     super(props);
     this.state = {
       currentView: '',
       currentPostId: ''    
-    };//this.state
+    };
     this.handleToUpdateState  = this.handleToUpdate.bind(this);
   }
 
-  handleToUpdate(someArg, post_id){
+  handleToUpdate(someArg:string, post_id:string){
     this.setState({currentView:someArg, currentPostId:post_id});
   }
 
   render(){
-    let handleToUpdate=this.handleToUpdateState;
+    const handleToUpdate:any=this.handleToUpdateState;
+    if (this.state === null) {
+      this.setState({
+        currentView: '',
+        currentPostId: ''    
+      });
+    };
     switch (this.state.currentView) {
       case 'Publications':
         return(
           <div id="appDiv">
             <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
-            <PublicationWriter fatherId='0'/>
             <PublicationViewer /> 
           </div>
         );

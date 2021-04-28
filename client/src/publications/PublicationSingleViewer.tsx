@@ -5,8 +5,21 @@ import { Container, Card, Row, Col, Button, Accordion} from 'react-bootstrap';
 import DynamicTablePublications from "../myComponents/DynamicTablePublications";
 import PublicationWriter from "./PublicationWriter";
 
-class PublicationSingleViewer extends React.Component {
-  constructor(props) {
+interface Props {
+  post_id:string;
+}
+
+interface State {
+  post_id:string,
+  imgsrc:string,
+  publication_content:string,
+  items:[],
+  publications:[],
+  loaded:boolean
+}
+
+class PublicationSingleViewer extends React.Component<Props, State> {
+  constructor(props:Props) {
     super(props);
     this.state = {
       post_id : this.props.post_id,
@@ -22,7 +35,7 @@ class PublicationSingleViewer extends React.Component {
     this.deleteRecord = this.deleteRecord.bind(this);
   }
 
-  deleteRecord(r){
+  deleteRecord(r:string){
     console.log('record '+r+' deleted');
   };
 
@@ -69,13 +82,13 @@ class PublicationSingleViewer extends React.Component {
     };
   };//refresh.
   
-  printFather(elements) {
+  printFather(elements:any) {
     this.setState({publication_content : elements[0].publication_content});
     this.setState({imgsrc : elements[0].image_file});
     this.setState({loaded : true});
   };//printFather
 
-  changeImgSize(event) {
+  changeImgSize(event:any) {
     console.log("here!");
     const currentClasses = event.target.className;
     if (currentClasses === "flexBox fatherImg") event.target.className = "flexBox fatherImgExpand";
@@ -117,7 +130,7 @@ class PublicationSingleViewer extends React.Component {
               </Card.Header>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
-                  <PublicationWriter fatherId={this.state.post_id}/>
+                  <PublicationWriter fatherId={this.state.post_id} refresh={() => this.refresh}/>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
@@ -127,7 +140,7 @@ class PublicationSingleViewer extends React.Component {
           <button className="btn btn-outline-success" onClick={this.refresh}>Refresh</button> 
         </div>
         <div className="cardFather">
-          <DynamicTablePublications className="c5pxmarginstop" elements={this.state.publications} refresh={this.refresh.bind()} deleteRecord={this.deleteRecord.bind()}></DynamicTablePublications>
+          <DynamicTablePublications className="c5pxmarginstop" elements={this.state.publications} refresh={() => this.refresh} deleteRecord={() => this.deleteRecord}></DynamicTablePublications>
         </div>
       </div>
     );

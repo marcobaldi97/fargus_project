@@ -1,12 +1,16 @@
 import React   from 'react';
 import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
-class Topnavbar extends React.Component {
+interface Props {
+  handleToUpdate: (param1:string, param2:number) => string; 
+};
+
+class Topnavbar extends React.Component<Props> {
   render(){
     var handleToUpdate = this.props.handleToUpdate;
     return(
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="" onClick={() => handleToUpdate('')}>Fargus Project</Navbar.Brand>
+        <Navbar.Brand href="" onClick={() => handleToUpdate('',0)}>Fargus Project</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
