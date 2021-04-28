@@ -46,6 +46,7 @@ class PublicationSingleViewer extends React.Component<Props, State> {
   };
 
   refresh(){
+    console.log("Refresh!!!");
     try{
       let aux = this.state.post_id;
       let params = {
@@ -130,7 +131,7 @@ class PublicationSingleViewer extends React.Component<Props, State> {
               </Card.Header>
               <Accordion.Collapse eventKey="0">
                 <Card.Body>
-                  <PublicationWriter fatherId={this.state.post_id} refresh={() => this.refresh}/>
+                  <PublicationWriter fatherId={this.state.post_id} refresh={this.refresh.bind(this)}/>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>

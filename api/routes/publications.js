@@ -28,6 +28,12 @@ router.post('/list/', async function(req, res, next) {
   }
 });
 
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}   
+
 router.post('/publish/', async function(req, res, next) {
   const textToInput = req.body.textToInput;
   const fatherId = parseInt(req.body.responseTo);
@@ -37,6 +43,7 @@ router.post('/publish/', async function(req, res, next) {
     const text = 'INSERT INTO publications(publication_content, publication_father, image_file) VALUES($1,$2,$3);';
     const values = [textToInput, fatherId, imgFile];
     await dbm.executeInsertConsult(text, values); //Esto tendría que ser async
+    await sleep(2000);
     res.send("ready!");
   }catch(err){
     res.send('Something went wrong! /publish/');

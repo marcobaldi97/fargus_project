@@ -86,6 +86,7 @@ class PublicationViewer extends React.Component<Props, State> {
   }
 
   refresh() {
+    console.log("Refresh!");
     this.setState({loaded: true});
     let params = {
       itemToSearch: this.state.current_value
@@ -104,7 +105,7 @@ class PublicationViewer extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <PublicationWriter fatherId='0' refresh={() => this.refresh}/>{/*esto a moverlo adentro de viewer*/}
+        <PublicationWriter fatherId='0' refresh={() => this.refresh}/>
         <button className="btn btn-outline-success iNeedMoreMargins" onClick={() => this.refresh}> Refresh </button>
         <DynamicTablePublications elements={this.state.publications} deleteRecord={() => this.deleteRecord} refresh={() => this.refresh}></DynamicTablePublications>
       </div>    

@@ -24,7 +24,7 @@ class PublicationWriter extends React.Component<Props, State> {
       valueImg: '',
       fatherId: fatherIdWaited,
       selectedFile: null,
-      readyToSubmit: true
+      readyToSubmit: false
     };//this.state
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeImg = this.handleChangeImg.bind(this);
@@ -50,10 +50,11 @@ class PublicationWriter extends React.Component<Props, State> {
     const fileArray = await this.getBase64(event.target.files[0]);
     const endT = performance.now();
     console.log("Time taken to getBase64: "+(endT - beginT)+"ms");
-    this.setState({selectedFile: fileArray, valueImg: event.target.value, readyToSubmit: false});
+    this.setState({selectedFile: fileArray, valueImg: event.target.value});
   };
 
   handleSubmit(event:any) {
+    this.setState({readyToSubmit: true});
     let params = {
       textToInput: this.state.value,
       srcToInput: this.state.valueImg,
@@ -68,6 +69,7 @@ class PublicationWriter extends React.Component<Props, State> {
     .then(response => {
       console.log("😎");
       this.props.refresh();//no refresca, no le da el tiempo(supongo)
+      this.setState({readyToSubmit: false});
     })
     .catch(err => {
       console.log(err);//codigo de que hacer en caso de error.
