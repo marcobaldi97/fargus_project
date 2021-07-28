@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 
-import DynamicTablePublications from '../myComponents/DynamicTablePublications'
-import PublicationWriter from "./PublicationWriter";
+import DynamicTablePublications from '../DynamicTablePublications/DynamicTablePublications'
+import PublicationWriter from "../PublicationWriter/PublicationWriter";
 
 interface Props {
 

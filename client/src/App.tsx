@@ -4,9 +4,9 @@ import './App.css';
 
 //my stuff ↓↓↓
 import Topnavbar from "./top-navbar/Topnavbar";
-import PublicationViewer from './publications/PublicationViewer';
+import PublicationViewer from './myComponents/PublicationViewer/PublicationViewer';
 import MainCategory from './categories/MainCategory';
-import PublicationSingleViewer from './publications/PublicationSingleViewer';
+import PublicationSingleViewer from './myComponents/PublicationSingleViewer/PublicationSingleViewer';
 //my stuff ↑↑↑
 
 interface Props {
@@ -18,54 +18,54 @@ interface State {
 }
 
 class App extends React.Component<Props, State> {
-  handleToUpdateState:any;
-  constructor(props:any){
+  handleToUpdateState: any;
+  constructor(props: any) {
     super(props);
     this.state = {
       currentView: '',
-      currentPostId: ''    
+      currentPostId: ''
     };
-    this.handleToUpdateState  = this.handleToUpdate.bind(this);
+    this.handleToUpdateState = this.handleToUpdate.bind(this);
   }
 
-  handleToUpdate(someArg:string, post_id:string){
-    this.setState({currentView:someArg, currentPostId:post_id});
+  handleToUpdate(someArg: string, post_id: string) {
+    this.setState({ currentView: someArg, currentPostId: post_id });
   }
 
-  render(){
-    const handleToUpdate:any=this.handleToUpdateState;
+  render() {
+    const handleToUpdate: any = this.handleToUpdateState;
     if (this.state === null) {
       this.setState({
         currentView: '',
-        currentPostId: ''    
+        currentPostId: ''
       });
     };
     switch (this.state.currentView) {
       case 'Publications':
-        return(
+        return (
           <div id="appDiv">
-            <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
-            <PublicationViewer /> 
+            <Topnavbar handleToUpdate={handleToUpdate.bind(this)} />
+            <PublicationViewer />
           </div>
         );
       case 'Main Category':
-        return(
+        return (
           <div id="appDiv">
-            <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
-            <MainCategory handleToUpdate={handleToUpdate.bind(this)}/>
+            <Topnavbar handleToUpdate={handleToUpdate.bind(this)} />
+            <MainCategory handleToUpdate={handleToUpdate.bind(this)} />
           </div>
-        );  
+        );
       case 'Current post':
-        return(
+        return (
           <div id="appDiv">
-            <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
-            <PublicationSingleViewer post_id={this.state.currentPostId}/>
+            <Topnavbar handleToUpdate={handleToUpdate.bind(this)} />
+            <PublicationSingleViewer post_id={this.state.currentPostId} />
           </div>
-        );  
+        );
       case '':
-        return(
+        return (
           <div id="appDiv">
-            <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
+            <Topnavbar handleToUpdate={handleToUpdate.bind(this)} />
             <div className="selfContainedWellPadded">
               <p>The Objective of this APP is to show the skills I'm learning in React+Express+Node.js+PostgreSQL</p>
               <p>Please go to: Views/Publications to create "Father" publications.</p>
@@ -74,9 +74,9 @@ class App extends React.Component<Props, State> {
           </div>
         );
       default:
-        return(
+        return (
           <div id="appDiv">
-            <Topnavbar handleToUpdate={handleToUpdate.bind(this)}/>
+            <Topnavbar handleToUpdate={handleToUpdate.bind(this)} />
             <p>Nothing to be seen here boi!</p>
           </div>
         );
