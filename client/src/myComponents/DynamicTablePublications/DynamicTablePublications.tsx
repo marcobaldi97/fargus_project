@@ -2,12 +2,13 @@ import { Container, Table, Button } from "react-bootstrap";
 import React from "react";
 import axios from "axios";
 
-/**
- * This component must receive an array with publications. A function to delete publications and a refresh one.
- * Ex.:elements={this.state.publications} refresh={this.refresh.bind()} deleteRecord={this.deleteRecord.bind()}
- */
-class DynamicTablePublications extends React.Component {
-	arrayBufferToBase64(buffer) {
+interface DynamicTablePublicationsProps {
+	elements: any[];
+	refresh: () => void;
+}
+
+class DynamicTablePublications extends React.Component<DynamicTablePublicationsProps> {
+	private arrayBufferToBase64(buffer: any) {
 		let binary = "";
 		let bytes = new Uint8Array(buffer);
 		let len = bytes.byteLength;
@@ -17,7 +18,7 @@ class DynamicTablePublications extends React.Component {
 		return window.btoa(binary);
 	}
 
-	printItems(elements) {
+	private printItems(elements: any) {
 		const tributeArray = [];
 		for (let i = 0; i < elements.length; i++) {
 			let base64boi = elements[i].image_file; //Fuuuuuuuck!
@@ -42,7 +43,7 @@ class DynamicTablePublications extends React.Component {
 		return tributeArray;
 	}
 
-	deleteRecord(itemToDelete) {
+	private deleteRecord(itemToDelete: number) {
 		try {
 			let params = {
 				idToDelete: itemToDelete,
@@ -67,10 +68,10 @@ class DynamicTablePublications extends React.Component {
 				<Table bordered hover responsive>
 					<thead>
 						<tr>
-							<th width="80">#PostId</th>
-							<th width="100">Img</th>
+							<th style={{ width: "80px" }}>#PostId</th>
+							<th style={{ width: "100px" }}>Img</th>
 							<th>Content</th>
-							<th width="80">Delete</th>
+							<th style={{ width: "80px" }}>Delete</th>
 						</tr>
 					</thead>
 					<tbody>{publications}</tbody>
