@@ -6,9 +6,9 @@ import "./App.css";
 
 //my stuff ↓↓↓
 import Topnavbar from "./myComponents/top-navbar/Topnavbar";
-import PublicationViewer from "./myComponents/PublicationViewer/PublicationViewer";
-import MainCategory from "./myComponents/MainCategory/MainCategory";
-import PublicationSingleViewer from "./myComponents/PublicationSingleViewer/PublicationSingleViewer";
+import PublicationViewer from "./pages/PublicationViewer/PublicationViewer";
+import MainCategory from "./pages/MainCategory/MainCategory";
+import PublicationSingleViewer from "./pages/PublicationSingleViewer/PublicationSingleViewer";
 //my stuff ↑↑↑
 
 interface AppProps {} //no real props here

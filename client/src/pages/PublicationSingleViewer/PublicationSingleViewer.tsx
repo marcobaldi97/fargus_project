@@ -4,8 +4,8 @@ import axios from "axios";
 
 import { Card, Button, Accordion } from "react-bootstrap";
 
-import DynamicTablePublications from "../DynamicTablePublications/DynamicTablePublications";
-import PublicationWriter from "../PublicationWriter/PublicationWriter";
+import DynamicTablePublications from "../../myComponents/DynamicTablePublications/DynamicTablePublications";
+import PublicationWriter from "../../myComponents/PublicationWriter/PublicationWriter";
 
 import "./PublicationSingleViewerStyle.css";
 
