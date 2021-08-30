@@ -1,6 +1,9 @@
-import { Container, Table, Button } from "react-bootstrap";
 import React from "react";
 import axios from "axios";
+
+import { APIClient } from "../../core/APIClient";
+
+import { Container, Table, Button } from "react-bootstrap";
 
 interface DynamicTablePublicationsProps {
 	elements: any[];
@@ -8,14 +11,11 @@ interface DynamicTablePublicationsProps {
 }
 
 class DynamicTablePublications extends React.Component<DynamicTablePublicationsProps> {
-	private arrayBufferToBase64(buffer: any) {
-		let binary = "";
-		let bytes = new Uint8Array(buffer);
-		let len = bytes.byteLength;
-		for (let i = 0; i < len; i++) {
-			binary += String.fromCharCode(bytes[i]);
-		}
-		return window.btoa(binary);
+	apiClient: APIClient;
+	constructor(props: DynamicTablePublicationsProps) {
+		super(props);
+
+		this.apiClient = APIClient.getInstance();
 	}
 
 	private printItems(elements: any) {
@@ -32,7 +32,7 @@ class DynamicTablePublications extends React.Component<DynamicTablePublicationsP
 					</td>
 					<td>{elements[i].publication_content}</td>
 					<td>
-						<Button onClick={() => this.deleteRecord(elements[i].publication_id)} variant="danger">
+						<Button onClick={async () => this.deleteRecord(elements[i].publication_id)} variant="danger">
 							Delete
 						</Button>
 					</td>
@@ -43,22 +43,16 @@ class DynamicTablePublications extends React.Component<DynamicTablePublicationsP
 		return tributeArray;
 	}
 
-	private deleteRecord(itemToDelete: number) {
-		try {
-			let params = {
-				idToDelete: itemToDelete,
-			};
-			axios
-				.post("/publications/publish/deletePost/", params) //url + parametros
-				.then((response) => {
-					this.props.refresh();
-				})
-				.catch((err) => {
-					console.log(err); //codigo de que hacer en caso de error.
-				});
-		} catch (err) {
-			console.log(err);
-		}
+	private async deleteRecord(itemToDelete: number) {
+		let params = {
+			idPost: itemToDelete,
+		};
+
+		const deleteConfirmation = await this.apiClient.deletePost(params);
+
+		console.log(deleteConfirmation);
+
+		if (deleteConfirmation) this.props.refresh();
 	}
 
 	render() {
