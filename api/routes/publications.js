@@ -59,7 +59,7 @@ router.post("/publish/", cors(corsOptions), async function (req, res, next) {
 router.post("/deletePost/", cors(corsOptions), function (req, res, next) {
 	try {
 		let dbm = new DataBaseMediator();
-		let idToDelete = req.body.idToDelete;
+		let idToDelete = req.body.idPost;
 		const text = "DELETE FROM publications WHERE publication_id=$1;";
 		const values = [idToDelete];
 		dbm.executeDeleteConsult(text, values);

@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Button } from "react-bootstrap";
-
 import { APIClient } from "../../core/APIClient";
 
 import DynamicTablePublications from "../../myComponents/DynamicTablePublications/DynamicTablePublications";
@@ -11,12 +9,11 @@ interface Props {}
 
 interface State {
 	current_value: number;
-	value: string;
-	post_id: string;
-	post_content: string;
 	items: any;
+	post_content: string;
+	post_id: string;
 	publications: [];
-	loaded: boolean;
+	value: string;
 }
 
 class PublicationViewer extends React.Component<Props, State> {
@@ -34,16 +31,16 @@ class PublicationViewer extends React.Component<Props, State> {
 
 		this.state = {
 			current_value: 0,
-			value: "",
-			post_id: "",
-			post_content: "",
 			items: [],
+			post_content: "",
+			post_id: "",
 			publications: [],
-			loaded: false,
-		}; //this.state
-		if (!this.state.loaded) {
-			this.refresh();
-		}
+			value: "",
+		};
+	}
+
+	async componentDidMount() {
+		await this.refresh();
 	}
 
 	private handleChange(event: any) {
@@ -56,20 +53,7 @@ class PublicationViewer extends React.Component<Props, State> {
 		this.setState({ current_value: counter });
 	}
 
-	private async deleteRecord(itemToDelete: number) {
-		const params = {
-			idPost: itemToDelete,
-		};
-
-		const deleteConfirmation = await this.apiClient.deletePost(params);
-
-		if (deleteConfirmation) await this.refresh();
-	}
-
 	private async refresh() {
-		console.log("Refresh!");
-		this.setState({ loaded: true });
-
 		let params = {
 			itemToSearch: this.state.current_value,
 		};
@@ -85,20 +69,14 @@ class PublicationViewer extends React.Component<Props, State> {
 		return (
 			<div>
 				<PublicationWriter fatherId="0" refresh={async () => this.refresh()} />
+
 				<button className="btn btn-outline-success iNeedMoreMargins" onClick={async () => this.refresh()}>
-					{" "}
-					Refresh{" "}
+					Refresh
 				</button>
-				<DynamicTablePublications elements={this.state.publications} refresh={async () => this.refresh()}></DynamicTablePublications>
+
+				<DynamicTablePublications elements={this.state.publications} refresh={async () => this.refresh()} />
 			</div>
 		);
 	}
 }
 export default PublicationViewer;
-
-/* DUMP
-<tr>
-  <td>{this.state.post_id}</td>
-  <td>{this.state.post_content}</td>
-</tr>
-*/
