@@ -12,11 +12,11 @@ interface PublicationWriterProps {
 }
 
 interface PublicationWriterState {
+	fatherId: string;
+	readyToSubmit: boolean;
+	selectedFile: any;
 	value: string;
 	valueImg: string;
-	fatherId: string;
-	selectedFile: any;
-	readyToSubmit: boolean;
 }
 
 class PublicationWriter extends React.Component<PublicationWriterProps, PublicationWriterState> {
@@ -33,12 +33,12 @@ class PublicationWriter extends React.Component<PublicationWriterProps, Publicat
 		this.apiClient = APIClient.getInstance();
 
 		this.state = {
+			fatherId: fatherIdWaited,
+			readyToSubmit: false,
+			selectedFile: null,
 			value: "",
 			valueImg: "",
-			fatherId: fatherIdWaited,
-			selectedFile: null,
-			readyToSubmit: false,
-		}; //this.state
+		};
 	}
 
 	private handleChange(event: any) {
@@ -69,11 +69,13 @@ class PublicationWriter extends React.Component<PublicationWriterProps, Publicat
 		this.setState({ readyToSubmit: true });
 		event.preventDefault();
 
-		let params = {
-			textToInput: this.state.value,
-			srcToInput: this.state.valueImg,
-			responseTo: this.state.fatherId,
-			imgFile: this.state.selectedFile,
+		const { fatherId, selectedFile, value, valueImg } = this.state;
+
+		const params = {
+			imgFile: selectedFile,
+			responseTo: fatherId,
+			srcToInput: valueImg,
+			textToInput: value,
 		};
 
 		if (params.srcToInput === "") {
@@ -84,6 +86,7 @@ class PublicationWriter extends React.Component<PublicationWriterProps, Publicat
 		await this.apiClient.publishPost(params);
 
 		this.props.refresh();
+
 		this.setState({ value: "", valueImg: "", readyToSubmit: false, selectedFile: null });
 	}
 
@@ -97,25 +100,31 @@ class PublicationWriter extends React.Component<PublicationWriterProps, Publicat
 								<InputGroup.Prepend>
 									<InputGroup.Text>Post:</InputGroup.Text>
 								</InputGroup.Prepend>
+
 								<FormControl as="textarea" aria-label="With textarea" value={this.state.value} onChange={this.handleChange} />
 							</InputGroup>
 						</Col>
+
 						<Col xs={0}></Col>
 					</Row>
+
 					<Row className="align-items-center letMeSomeSpace publicationWriterImageSource">
 						<Col xs={6}>
 							<InputGroup>
 								<InputGroup.Prepend>
 									<InputGroup.Text>Image Source:</InputGroup.Text>
 								</InputGroup.Prepend>
+
 								<Form.File id="custom-file" label={this.state.valueImg} custom onChange={this.handleChangeImg} />
 							</InputGroup>
 						</Col>
+
 						<Col xs={2}>
 							<div className="alignMe">
 								<input disabled={this.state.readyToSubmit} className="btn btn-outline-success" type="submit" value="Submit" />
 							</div>
 						</Col>
+
 						<Col xs={4}>
 							<img src={this.state.selectedFile} className="previewImg" alt="Preview..."></img>
 						</Col>
