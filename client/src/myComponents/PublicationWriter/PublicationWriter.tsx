@@ -9,9 +9,10 @@ import "./PublicationWriterStyles.css";
 interface PublicationWriterProps {
 	fatherId: string;
 	refresh: () => void;
+	handleSubmit?: (copyState: PublicationWriterState) => void;
 }
 
-interface PublicationWriterState {
+export interface PublicationWriterState {
 	fatherId: string;
 	readyToSubmit: boolean;
 	selectedFile: any;
@@ -66,8 +67,16 @@ class PublicationWriter extends React.Component<PublicationWriterProps, Publicat
 	}
 
 	private async handleSubmit(event: any) {
-		this.setState({ readyToSubmit: true });
 		event.preventDefault();
+
+		if (this.props.handleSubmit !== undefined) {
+			console.log("Here!");
+			const copyState = this.state;
+			this.props.handleSubmit(copyState);
+			return;
+		}
+
+		this.setState({ readyToSubmit: true });
 
 		const { fatherId, selectedFile, value, valueImg } = this.state;
 
