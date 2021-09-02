@@ -34,7 +34,6 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 		}; //this.state
 	}
 
-	/***Refresh */
 	private refresh() {
 		try {
 			let aux = this.state.post_id;
@@ -82,7 +81,7 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 
 	render() {
 		return (
-			<div>
+			<div className="publicationSingleViewerContainer">
 				<div className="cardFather">
 					<div className="opMessageLeft">
 						<img className="fatherImg" src={this.state.imgsrc} alt="\(>.<)/"></img>
@@ -94,8 +93,9 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 						<p>{this.state.publication_content}</p>
 					</div>
 				</div>
+
 				<div className="respondContainer">
-					<Accordion>
+					<Accordion className="respondCardContainer">
 						<Card>
 							<Card.Header>
 								<Accordion.Toggle as={Button} variant="btn btn-outline-success" eventKey="0">
@@ -103,13 +103,14 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 								</Accordion.Toggle>
 							</Card.Header>
 							<Accordion.Collapse eventKey="0">
-								<Card.Body>
+								<Card.Body className="respondCardBody">
 									<PublicationWriter fatherId={this.state.post_id} refresh={this.refresh} />
 								</Card.Body>
 							</Accordion.Collapse>
 						</Card>
 					</Accordion>
 				</div>
+
 				<div className="responsesContainer">
 					<DynamicTablePublications elements={this.state.publications} refresh={this.refresh}></DynamicTablePublications>
 				</div>

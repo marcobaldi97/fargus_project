@@ -1,10 +1,13 @@
 import React from "react";
 import axios from "axios";
 
-import { Button, Container, Row, Col, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Row, Spinner } from "react-bootstrap";
+
+import { APIClient } from "../../core/APIClient";
 
 import "./MainCategoryStyles.css";
+
+import PublicationPresentationCard from "../../myComponents/PublicationPresentationCard/PublicationPresentationCard";
 
 interface MainCategoryProps {}
 
@@ -14,9 +17,12 @@ interface MainCategoryState {
 	post_id: string;
 	post_content: string;
 	items: any[];
+	loading: boolean;
 }
 
 class MainCategory extends React.Component<MainCategoryProps, MainCategoryState> {
+	apiClient: APIClient;
+
 	constructor(props: MainCategoryProps) {
 		super(props);
 
@@ -25,13 +31,16 @@ class MainCategory extends React.Component<MainCategoryProps, MainCategoryState>
 		this.loadPosts = this.loadPosts.bind(this);
 		this.componentDidMount = this.componentDidMount.bind(this);
 
+		this.apiClient = APIClient.getInstance();
+
 		this.state = {
 			current_value: 0,
 			value: "",
 			post_id: "",
 			post_content: "",
 			items: [],
-		}; //this.state
+			loading: false,
+		};
 	}
 
 	private handleChange(event: any) {
@@ -41,48 +50,41 @@ class MainCategory extends React.Component<MainCategoryProps, MainCategoryState>
 	private printItems(elements: any[]) {
 		this.setState({ items: [] }); //wash your hands(array) before entering this house!
 		const tributeArray = [];
+
 		for (let i = 0; i < elements.length; i++) {
 			const desiredLength = 80;
 			if (elements[i].publication_content.length > desiredLength) {
 				elements[i].publication_content = elements[i].publication_content.substring(0, desiredLength - 3);
-				var finalPoints = "...";
+				let finalPoints = "...";
 				elements[i].publication_content = elements[i].publication_content + finalPoints;
 			}
 			const linkDirection = "/singleViewer" + elements[i].publication_id;
+
 			tributeArray.push(
-				<Col md={4} key={elements[i].publication_id}>
-					<div className="postCard">
-						<Card border="success" style={{ width: "18rem" }}>
-							<Card.Img className="imgInPostCard" variant="top" src={elements[i].image_file} />
-							<Card.Body>
-								<Card.Title>#{elements[i].publication_id}</Card.Title>
-								<Card.Text>{elements[i].publication_content}</Card.Text>
-								<Link to={linkDirection}>
-									<button className="normalButton">
-										<p>View</p>
-									</button>
-								</Link>
-							</Card.Body>
-						</Card>
-					</div>
-				</Col>
+				<PublicationPresentationCard
+					publicationId={elements[i].publication_id}
+					publicationImg={elements[i].image_file}
+					publicationContent={elements[i].publication_content}
+					linkDirection={linkDirection}
+					mdWidth={3}
+				/>
 			);
 		}
 		this.setState({ items: this.state.items.concat(tributeArray) });
 	}
 
-	private loadPosts() {
-		let params = {
+	private async loadPosts() {
+		this.setState({ loading: true });
+
+		const params = {
 			itemToSearch: this.state.current_value,
 		};
-		axios
-			.post("/publications/publish/list", params) //url + parametros
-			.then((response) => {
-				this.printItems(response.data.arrayOfPublications);
-			})
-			.catch((err) => {
-				console.log(err); //codigo de que hacer en caso de error.
-			});
+
+		const response = await this.apiClient.fetchPublications(params);
+
+		if (response !== null) this.printItems(response.data.arrayOfPublications);
+
+		this.setState({ loading: false });
 	}
 
 	componentDidMount() {
@@ -90,7 +92,9 @@ class MainCategory extends React.Component<MainCategoryProps, MainCategoryState>
 	}
 
 	render() {
-		return (
+		return this.state.loading ? (
+			<Spinner animation="border" variant="success" />
+		) : (
 			<Container id="Table" fluid>
 				<Row className="publicationCard3way">{this.state.items}</Row>
 			</Container>

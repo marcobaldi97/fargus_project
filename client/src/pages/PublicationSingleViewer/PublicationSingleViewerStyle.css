@@ -1,14 +1,11 @@
 .cardFather {
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+
 	display: flex;
 	flex-direction: row;
 
-	margin: 5px;
-	padding: 10px;
 	width: 100vw;
-
-	border: 2px;
-	border-radius: 3px;
-	border-color: black;
 }
 
 .opMessageLeft {
@@ -19,8 +16,6 @@
 .opMessageRight {
 	display: flex;
 	flex-direction: column;
-
-	padding: 10px;
 }
 
 .opTitle {
@@ -36,26 +31,45 @@
 }
 
 .respondContainer {
+	margin-top: 5px !important;
+
 	display: flex;
 	flex-direction: row;
 
-	margin: 5px;
-	padding: 10px;
 	width: 90vw !important;
 }
 
 .refreshButton {
-	margin: 10px !important;
-
 	height: fit-content;
 	width: 120px;
-	padding: 9px;
 }
 
 .responsesContainer {
+	margin-top: 5px !important;
+
 	display: flex;
 	flex-direction: row;
 
-	margin: 5px;
-	width: 100vw;
+	width: 100%;
+}
+
+.respondCardContainer {
+	margin-top: 5px !important;
+
+	width: 100%;
+}
+
+.publicationSingleViewerContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	padding: 5px;
+}
+
+.respondCardBody {
+	display: flex;
+	align-items: flex-start;
+
+	width: 100%;
 }

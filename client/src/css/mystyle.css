@@ -1,6 +1,7 @@
 :root {
 	--mainColor: #28a745;
 	--fontColor: rgba(61, 31, 31, 0.685);
+	--border-color: #ced4da;
 }
 
 p {

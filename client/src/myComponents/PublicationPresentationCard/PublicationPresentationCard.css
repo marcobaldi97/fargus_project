@@ -6,6 +6,17 @@
 	height: fit-content;
 }
 
+.postCard {
+	margin-top: 15px !important;
+
+	max-height: 800 px;
+	min-height: 60vh;
+	padding-top: 3%;
+	padding-bottom: 3%;
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
 .normalButton {
 	display: flex;
 	flex-direction: row;

@@ -1,8 +1,67 @@
+:root {
+	--border-color: #ced4da;
+}
+
 .PublicationWriterContainer {
-	width: 100%;
+	width: max-content !important;
 }
 
 .previewImg {
-	width: 200px;
-	height: 150px;
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+	margin: 10px;
+
+	min-width: 50px;
+	min-height: 50px;
+	max-width: 280px;
+	max-height: 200px;
+	width: fit-content;
+	height: fit-content;
+}
+
+.publicationWriterForm {
+	padding: 10px;
+
+	border: 1px solid var(--border-color);
+	border-radius: 4px;
+
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-item: baseline;
+
+	margin: 12px;
+
+	min-width: 300px;
+	min-height: fit-content;
+	width: fit-content;
+	height: fit-content;
+}
+
+.leftComponent {
+	display: flex;
+	align-items: stretch;
+
+	justify-content: center;
+
+	min-width: 300px;
+}
+
+.rightComponent {
+	display: flex;
+
+	min-width: 60px;
+	width: fit-content;
+}
+
+.separateComponent {
+	margin: 2px;
+}
+
+.submitButton {
+	width: 100%;
+}
+
+button {
+	width: 100%;
 }

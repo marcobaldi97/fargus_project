@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Container, Row, Col, InputGroup, FormControl, Form } from "react-bootstrap";
+import { Container, InputGroup, FormControl, Form, Spinner } from "react-bootstrap";
 
 import { APIClient } from "../../core/APIClient";
 
@@ -102,42 +102,31 @@ class PublicationWriter extends React.Component<PublicationWriterProps, Publicat
 	render() {
 		return (
 			<Container className="PublicationWriterContainer">
-				<form onSubmit={this.handleSubmit} className="publicationWriterBorders">
-					<Row className="align-items-center letMeSomeSpace publicationWriterPost">
-						<Col xs={12}>
-							<InputGroup>
-								<InputGroup.Prepend>
-									<InputGroup.Text>Post:</InputGroup.Text>
-								</InputGroup.Prepend>
+				<form onSubmit={this.handleSubmit} className="publicationWriterForm">
+					<div className="leftItems">
+						<InputGroup className="separateComponent">
+							<InputGroup.Prepend>
+								<InputGroup.Text>Post:</InputGroup.Text>
+							</InputGroup.Prepend>
 
-								<FormControl as="textarea" aria-label="With textarea" value={this.state.value} onChange={this.handleChange} />
-							</InputGroup>
-						</Col>
+							<FormControl as="textarea" aria-label="With textarea" value={this.state.value} onChange={this.handleChange} />
+						</InputGroup>
 
-						<Col xs={0}></Col>
-					</Row>
+						<InputGroup className="separateComponent">
+							<InputGroup.Prepend>
+								<InputGroup.Text>Image Source:</InputGroup.Text>
+							</InputGroup.Prepend>
 
-					<Row className="align-items-center letMeSomeSpace publicationWriterImageSource">
-						<Col xs={6}>
-							<InputGroup>
-								<InputGroup.Prepend>
-									<InputGroup.Text>Image Source:</InputGroup.Text>
-								</InputGroup.Prepend>
+							<Form.File id="custom-file" label={this.state.valueImg} custom onChange={this.handleChangeImg} />
+						</InputGroup>
 
-								<Form.File id="custom-file" label={this.state.valueImg} custom onChange={this.handleChangeImg} />
-							</InputGroup>
-						</Col>
+						<input disabled={this.state.readyToSubmit} className="btn btn-outline-success submitButton" type="submit" value="Submit" />
+						{this.state.readyToSubmit && <Spinner animation="border" variant="success" />}
+					</div>
 
-						<Col xs={2}>
-							<div className="alignMe">
-								<input disabled={this.state.readyToSubmit} className="btn btn-outline-success" type="submit" value="Submit" />
-							</div>
-						</Col>
-
-						<Col xs={4}>
-							<img src={this.state.selectedFile} className="previewImg" alt="Preview..."></img>
-						</Col>
-					</Row>
+					<div className="rightItems">
+						<img src={this.state.selectedFile} className="previewImg" alt="" />
+					</div>
 				</form>
 			</Container>
 		);
