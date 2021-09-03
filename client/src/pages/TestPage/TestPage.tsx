@@ -1,6 +1,7 @@
 import React from "react";
 
 import { APIClient } from "../../core/APIClient";
+import PostComment from "../../myComponents/PostComment/PostComment";
 import MakeNewPost from "../MakeNewPost/MakeNewPost";
 
 interface TestPageProps {}
@@ -15,7 +16,7 @@ class TestPage extends React.Component<TestPageProps, TestPageState> {
 	render() {
 		return (
 			<div className="TestPage-mainContainer">
-				<MakeNewPost></MakeNewPost>
+				<PostComment commentId={69} commentImg={"lololo"} commentContent={"La Li Lu Le Lo"} responses={[1, 2, 3, 4]} />
 			</div>
 		);
 	}

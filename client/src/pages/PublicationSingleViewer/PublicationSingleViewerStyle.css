@@ -45,10 +45,10 @@
 }
 
 .responsesContainer {
-	margin-top: 5px !important;
+	padding: 5px;
 
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 
 	width: 100%;
 }
@@ -72,4 +72,9 @@
 	align-items: flex-start;
 
 	width: 100%;
+}
+
+.postComment {
+	width: 100%;
+	padding: 2px;
 }

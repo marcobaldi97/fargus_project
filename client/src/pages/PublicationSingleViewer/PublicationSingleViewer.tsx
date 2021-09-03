@@ -8,6 +8,7 @@ import DynamicTablePublications from "../../myComponents/DynamicTablePublication
 import PublicationWriter from "../../myComponents/PublicationWriter/PublicationWriter";
 
 import "./PublicationSingleViewerStyle.css";
+import PostComment from "../../myComponents/PostComment/PostComment";
 
 interface PublicationSingleViewerState {
 	post_id: string;
@@ -23,6 +24,8 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 
 		this.refresh = this.refresh.bind(this);
 		this.printFather = this.printFather.bind(this);
+		this.printResponses = this.printResponses.bind(this);
+
 		this.componentDidMount = this.componentDidMount.bind(this);
 
 		this.state = {
@@ -57,6 +60,22 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 	/**Prints father */
 	private printFather(elements: any) {
 		this.setState({ publication_content: elements[0].publication_content, imgsrc: elements[0].image_file });
+	}
+
+	private printResponses() {
+		const commentsToPrint: JSX.Element[] = [];
+
+		this.state.publications.forEach((currentItem) => {
+			const { publication_id, image_file, publication_content } = currentItem;
+
+			commentsToPrint.push(
+				<div className="postComment">
+					<PostComment commentId={publication_id} commentImg={image_file} commentContent={publication_content} />
+				</div>
+			); //Add the responses.
+		});
+
+		return commentsToPrint;
 	}
 
 	async componentDidMount() {
@@ -110,12 +129,11 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 						</Card>
 					</Accordion>
 				</div>
-
-				<div className="responsesContainer">
-					<DynamicTablePublications elements={this.state.publications} refresh={this.refresh}></DynamicTablePublications>
-				</div>
+				<div className="responsesContainer">{this.printResponses()}</div>
 			</div>
 		);
 	}
 }
 export default withRouter(PublicationSingleViewer);
+
+//					<DynamicTablePublications elements={this.state.publications} refresh={this.refresh}></DynamicTablePublications>
