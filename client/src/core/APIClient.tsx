@@ -25,20 +25,23 @@ export class APIClient {
 		try {
 			//const response = await axios.post(`${this.apiServer}/publications/publish/list`, params);
 			const response = await axios.post(`/publications/publish/list`, params);
+
 			return response;
 		} catch (error) {
 			console.log(error);
+
 			return null;
 		}
 	}
 
 	public async fetchPostResponses(params: { itemToSearch: number }): Promise<any> {
 		try {
-			//const response = await axios.post(`${this.apiServer}/publications/publish/list`, params);
 			const response = await axios.post(`/publications/publish/list`, params);
+
 			return response;
 		} catch (error) {
 			console.log(error);
+
 			return null;
 		}
 	}
