@@ -2,6 +2,8 @@ import React from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import "./Topnavbar.css";
+
 interface TopnavbarProps {}
 
 interface TopnavbarState {}
@@ -9,7 +11,7 @@ interface TopnavbarState {}
 class Topnavbar extends React.Component<TopnavbarProps, TopnavbarState> {
 	render() {
 		return (
-			<Navbar bg="light" expand="lg">
+			<Navbar className="navBarPredefs" bg="light" expand="lg">
 				<Link to="/">
 					<Navbar.Brand>Fargus Project</Navbar.Brand>
 				</Link>

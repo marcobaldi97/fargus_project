@@ -1,0 +1,21 @@
+span {
+	color: var(--fontColor) !important;
+}
+
+a {
+	color: var(--fontColor) !important;
+
+	text-decoration: none !important;
+}
+
+.navbar-toggler-icon {
+	color: var(--fontColor) !important;
+}
+
+.dropdown-menu {
+	background-color: var(--mainColor) !important;
+}
+
+.dropdown-item:hover {
+	background-color: var(--mainColor) !important;
+}

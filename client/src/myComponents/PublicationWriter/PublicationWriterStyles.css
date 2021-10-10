@@ -1,9 +1,10 @@
-:root {
+:local {
 	--border-color: #ced4da;
 }
 
 .PublicationWriterContainer {
 	width: max-content !important;
+	max-width: 98%;
 }
 
 .previewImg {
@@ -64,4 +65,24 @@
 
 button {
 	width: 100%;
+}
+
+.separateComponent .input-group-prepend {
+	background-color: var(--mainColor) !important;
+}
+
+.separateComponent .input-group-prepend .input-group-text {
+	color: var(--secondaryColor) !important;
+}
+
+.separateComponent .form-control {
+	background-color: var(--primaryColor);
+
+	color: var(--fontColor);
+}
+
+.separateComponent .form-control:focus {
+	background-color: var(--primaryColor);
+
+	color: var(--fontColor);
 }

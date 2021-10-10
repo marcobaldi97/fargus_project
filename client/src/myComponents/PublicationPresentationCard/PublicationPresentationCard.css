@@ -17,6 +17,12 @@
 	padding-right: 3%;
 }
 
+.card-body {
+	background-color: var(--mainColor);
+
+	color: var(--fontColor);
+}
+
 .normalButton {
 	display: flex;
 	flex-direction: row;
@@ -28,8 +34,8 @@
 	padding: 12px;
 
 	color: var(--fontColor);
-	border: 1px solid var(--mainColor) !important;
-	background-color: white !important;
+	border: 1px solid var(--secondaryColor) !important;
+	background-color: var(--mainColor) !important;
 }
 
 .normalButton:hover {
@@ -45,4 +51,8 @@
 	color: white;
 	border: 1px solid var(--fontColor) !important;
 	background-color: var(--mainColor) !important;
+}
+
+.border-success {
+	border-color: var(--mainColor) !important;
 }
