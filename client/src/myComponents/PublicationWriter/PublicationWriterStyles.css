@@ -3,8 +3,11 @@
 }
 
 .PublicationWriterContainer {
-	width: max-content !important;
-	max-width: 98%;
+	display: grid;
+	margin: 3px;
+
+	justify-content: center;
+	align-items: center;
 }
 
 .previewImg {

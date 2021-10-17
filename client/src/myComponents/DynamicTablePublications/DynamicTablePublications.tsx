@@ -27,14 +27,18 @@ class DynamicTablePublications extends React.Component<DynamicTablePublicationsP
 			const imgToShow = base64boi;
 
 			tributeArray.push(
-				<tr key={elements[i].publication_id}>
-					<td>{elements[i].publication_id}</td>
+				<tr id={elements[i].publication_id} key={elements[i].publication_id}>
+					<td>
+						<p>{elements[i].publication_id}</p>
+					</td>
 
 					<td>
 						<img className="imgInTable" src={imgToShow} alt="a"></img>
 					</td>
 
-					<td>{elements[i].publication_content}</td>
+					<td>
+						<p>{elements[i].publication_content}</p>
+					</td>
 
 					<td>
 						<Button onClick={async () => this.deleteRecord(elements[i].publication_id)} variant="danger">

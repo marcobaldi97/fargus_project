@@ -24,30 +24,25 @@
 }
 
 .content {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: space-around;
+	display: grid;
+	grid-template-columns: 40% auto;
 
 	width: 100%;
 	height: fit-content;
 }
 
 .leftContent {
-	width: fit-content;
 	height: fit-content;
-
-	width: 40%;
 }
 
 .imgNotExpanded {
-	width: 150px;
-	height: 150px;
+	max-width: 110px;
+	max-height: 110px;
 }
 
 .imgExpanded {
-	min-width: 150px;
-	min-height: 150px;
+	min-width: 110px;
+	min-height: 110px;
 
 	max-width: 100%;
 	max-height: 100%;
@@ -55,15 +50,11 @@
 
 .rightContent {
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
 	justify-content: flex-start;
 
 	text-justify: initial;
 
 	padding: 5px;
-
-	width: 60%;
 
 	height: fit-content;
 }

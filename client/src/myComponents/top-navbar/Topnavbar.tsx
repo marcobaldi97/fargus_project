@@ -11,7 +11,7 @@ interface TopnavbarState {}
 class Topnavbar extends React.Component<TopnavbarProps, TopnavbarState> {
 	render() {
 		return (
-			<Navbar className="navBarPredefs" bg="light" expand="lg">
+			<Navbar className="navBarPredefs" bg="light" variant="dark" expand="lg">
 				<Link to="/">
 					<Navbar.Brand>Fargus Project</Navbar.Brand>
 				</Link>

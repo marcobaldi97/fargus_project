@@ -20,7 +20,7 @@ class PublicationPresentationCard extends React.Component<PublicationPresentatio
 		return (
 			<Col md={this.props.mdWidth ?? 4} key={this.props.publicationId}>
 				<div className="postCard">
-					<Card border="success" style={{ width: "18rem" }}>
+					<Card border="success">
 						<Card.Img className="imgInPostCard" variant="top" src={this.props.publicationImg} />
 						<Card.Body>
 							<Card.Title>#{this.props.publicationId}</Card.Title>

@@ -102,7 +102,7 @@ class PublicationWriter extends React.Component<PublicationWriterProps, Publicat
 	render() {
 		return (
 			<Container className="PublicationWriterContainer">
-				<form onSubmit={this.handleSubmit} className="publicationWriterForm">
+				<form className="publicationWriterForm" onSubmit={this.handleSubmit}>
 					<div className="leftItems">
 						<InputGroup className="separateComponent">
 							<InputGroup.Prepend>

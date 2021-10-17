@@ -12,6 +12,10 @@ a {
 	color: var(--fontColor) !important;
 }
 
+.navbar-toggler {
+	border: none !important;
+}
+
 .dropdown-menu {
 	background-color: var(--mainColor) !important;
 }

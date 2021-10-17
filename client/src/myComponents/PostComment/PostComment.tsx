@@ -50,7 +50,7 @@ class PostComment extends React.Component<PostCommentProps, PostCommentState> {
 			<div id={`comment-${this.props.commentId}`} key={`comment-${this.props.commentId}`} className="commentContainer">
 				<div className="topBar">
 					<div className="topBar-left">
-						<h6>{this.props.commentId}</h6>
+						<p>{this.props.commentId}</p>
 					</div>
 					<div className="topBar-right">{this.printResponses(this.props.responses)}</div>
 				</div>

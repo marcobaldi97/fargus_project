@@ -70,6 +70,7 @@
 .respondCardBody {
 	display: flex;
 	align-items: flex-start;
+	padding: 3px;
 
 	width: 100%;
 }
@@ -77,4 +78,8 @@
 .postComment {
 	width: 100%;
 	padding: 2px;
+}
+
+.card {
+	background-color: var(--secondaryColor) !important;
 }
