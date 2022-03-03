@@ -1,0 +1,102 @@
+.pageContainer {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+
+	padding: 12px;
+}
+
+.cardFather {
+	display: grid;
+	grid-template-columns: fit-content(300px) auto;
+	gap: 12px;
+
+	width: 100%;
+
+	border-radius: 4px;
+}
+
+.opMessageLeft {
+	width: fit-content;
+	max-width: 100%;
+	height: fit-content;
+	max-height: 400px;
+}
+
+.opMessageRight {
+	display: flex;
+	flex-direction: column;
+}
+
+.opTitle {
+	font-size: 18px;
+	font-weight: 600;
+	text-decoration: underline;
+}
+
+.opTitle:hover {
+	cursor: pointer;
+}
+
+.fatherImg {
+	height: 300px;
+	width: 200px;
+
+	justify-self: flex-start;
+}
+
+.respondForm {
+	display: flex;
+	justify-self: baseline;
+	width: 100%;
+}
+
+.responses {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+
+	width: 100%;
+}
+
+.postComment {
+	width: 100%;
+
+	padding: 6px 0 !important;
+	border-top: 1px solid var(--fontColor);
+}
+
+.respondCardContainer {
+	margin-top: 5px !important;
+
+	width: 100%;
+}
+
+.publicationSingleViewerContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	padding: 5px;
+}
+
+.respondCardBody {
+	display: flex;
+	align-items: flex-start;
+	padding: 3px;
+
+	width: 100%;
+}
+
+.postComment {
+	width: 100%;
+	padding: 2px;
+}
+
+.card {
+	background-color: var(--secondaryColor) !important;
+}

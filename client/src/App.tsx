@@ -3,9 +3,10 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import "./App.css";
+import ISUCKATCSS from "./assets/ISUCKATCSS.png";
 
 //my stuff ↓↓↓
-import Topnavbar from "./myComponents/top-navbar/Topnavbar";
+import Topnavbar from "./components/top-navbar/Topnavbar";
 import PublicationViewer from "./pages/PublicationViewer/PublicationViewer";
 import MainCategory from "./pages/MainCategory/MainCategory";
 import PublicationSingleViewer from "./pages/PublicationSingleViewer/PublicationSingleViewer";
@@ -44,10 +45,12 @@ class App extends React.Component<AppProps, AppState> {
 					</Route>
 
 					<Route path="/">
-						<div className="selfContainedWellPadded">
+						<div className="disclaimer">
 							<p>The Objective of this APP is to show the skills I'm learning in React+Express+Node.js+PostgreSQL</p>
 							<p>Please go to: Views/Publications to create "Father" publications.</p>
 							<p>The database backup is the FARGUS_PROJECT github. The original was created on PostgreSQL.</p>
+							<p>And before I have to mention it:</p>
+							<img src={ISUCKATCSS} alt=""></img>
 						</div>
 					</Route>
 				</Switch>

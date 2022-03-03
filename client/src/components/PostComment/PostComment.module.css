@@ -1,0 +1,43 @@
+.container {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 12px;
+
+	width: 100%;
+	height: fit-content;
+}
+
+.leftContent {
+	width: 100%;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.imagePreview {
+	width: 100%;
+	height: fit-content;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.rightContent {
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+
+	width: 100%;
+}
+
+.topbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	width: 100%;
+	height: fit-content;
+}

@@ -1,6 +1,7 @@
 :root {
 	--mainColor: #4d0505ab;
 	--secondaryColor: rgba(47, 5, 5, 0.808);
+	--terciaryColor: #7907079a;
 	--fontColor: rgba(255, 255, 255, 0.685);
 	--border-color: #054d16b2;
 	--dangerButtonBorderColor: #8b0a0aab;
@@ -10,7 +11,12 @@ p {
 	color: var(--fontColor) !important;
 }
 
-h* {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
 	color: var(--fontColor) !important;
 }
 
@@ -42,6 +48,10 @@ html {
 	height: 100%;
 }
 
+root {
+	font-size: 14px;
+}
+
 body {
 	min-height: 100%;
 
@@ -57,10 +67,12 @@ body {
 	margin: 1% 1% 1% 1%;
 }
 
-.selfContainedWellPadded {
-	padding-top: 3%;
-	padding-bottom: 3%;
-	padding-left: 3%;
+.disclaimer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 2% 2% 2% 2%;
 }
 
 .imgInPostCard {
@@ -114,4 +126,34 @@ td {
 	color: var(--fontColor) !important;
 	background-color: var(--mainColor) !important;
 	border-color: var(--dangerButtonBorderColor) !important;
+}
+
+.normalButton,
+button {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	justify-content: center;
+
+	padding: 12px;
+
+	color: var(--fontColor);
+	border: 1px solid var(--mainColor) !important;
+	background-color: var(--mainColor) !important;
+}
+
+.normalButton:hover,
+button:hover {
+	color: white;
+	border: 1px solid var(--fontColor) !important;
+	background-color: var(--mainColor) !important;
+}
+
+ul {
+	margin: 0%;
+	padding: 0%;
+}
+
+li {
+	list-style-type: none;
 }

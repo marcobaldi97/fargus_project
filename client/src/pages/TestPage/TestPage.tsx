@@ -1,7 +1,7 @@
 import React from "react";
 
 import { APIClient } from "../../core/APIClient";
-import PostComment from "../../myComponents/PostComment/PostComment";
+import PostComment from "../../components/PostComment/PostComment";
 import MakeNewPost from "../MakeNewPost/MakeNewPost";
 
 interface TestPageProps {}

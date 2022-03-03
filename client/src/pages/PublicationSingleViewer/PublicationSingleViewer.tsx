@@ -4,11 +4,10 @@ import axios from "axios";
 
 import { Card, Button, Accordion } from "react-bootstrap";
 
-import DynamicTablePublications from "../../myComponents/DynamicTablePublications/DynamicTablePublications";
-import PublicationWriter from "../../myComponents/PublicationWriter/PublicationWriter";
+import PublicationWriter from "../../components/PublicationWriter/PublicationWriter";
 
-import "./PublicationSingleViewerStyle.css";
-import PostComment from "../../myComponents/PostComment/PostComment";
+import styles from "./PublicationSingleViewer.module.css";
+import PostComment from "../../components/PostComment/PostComment";
 
 interface PublicationSingleViewerState {
 	post_id: string;
@@ -16,6 +15,7 @@ interface PublicationSingleViewerState {
 	publication_content: string;
 	items: [];
 	publications: [];
+	toComment: boolean;
 }
 
 class PublicationSingleViewer extends React.Component<any, PublicationSingleViewerState> {
@@ -34,6 +34,7 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 			publication_content: "",
 			items: [],
 			publications: [],
+			toComment: false,
 		}; //this.state
 	}
 
@@ -69,9 +70,9 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 			const { publication_id, image_file, publication_content } = currentItem;
 
 			commentsToPrint.push(
-				<div className="postComment">
+				<li className={styles.postComment}>
 					<PostComment commentId={publication_id} commentImg={image_file} commentContent={publication_content} />
-				</div>
+				</li>
 			); //Add the responses.
 		});
 
@@ -100,36 +101,24 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 
 	render() {
 		return (
-			<div className="publicationSingleViewerContainer">
-				<div className="cardFather">
-					<div className="opMessageLeft">
-						<img className="fatherImg" src={this.state.imgsrc} alt="\(>.<)/"></img>
+			<div className={styles.pageContainer}>
+				<div className={styles.cardFather}>
+					<div className={styles.opMessageLeft}>
+						<img className={styles.fatherImg} src={this.state.imgsrc} alt="\(>.<)/"></img>
 					</div>
-					<div className="opMessageRight">
+					<div className={styles.opMessageRight}>
 						<b>
-							<p className="opTitle">OP: {this.state.post_id}</p>
+							<p className={styles.opTitle} onClick={() => this.setState({ toComment: true })}>
+								OP: {this.state.post_id}
+							</p>
 						</b>
 						<p>{this.state.publication_content}</p>
 					</div>
 				</div>
 
-				<div className="respondContainer">
-					<Accordion className="respondCardContainer">
-						<Card>
-							<Card.Header>
-								<Accordion.Toggle as={Button} variant="btn btn-outline-success" eventKey="0">
-									Respond
-								</Accordion.Toggle>
-							</Card.Header>
-							<Accordion.Collapse eventKey="0">
-								<Card.Body className="respondCardBody">
-									<PublicationWriter fatherId={this.state.post_id} refresh={this.refresh} />
-								</Card.Body>
-							</Accordion.Collapse>
-						</Card>
-					</Accordion>
-				</div>
-				<div className="responsesContainer">{this.printResponses()}</div>
+				{this.state.toComment && <PublicationWriter fatherId={this.state.post_id} refresh={this.refresh} />}
+
+				<ul className={styles.responses}>{this.printResponses()}</ul>
 			</div>
 		);
 	}

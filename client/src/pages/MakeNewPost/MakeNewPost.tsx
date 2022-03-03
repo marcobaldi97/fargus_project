@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 
 import { APIClient } from "../../core/APIClient";
-import PublicationWriter, { PublicationWriterState } from "../../myComponents/PublicationWriter/PublicationWriter";
+import PublicationWriter, { PublicationWriterState } from "../../components/PublicationWriter/PublicationWriter";
 
 import { Spinner } from "react-bootstrap";
 

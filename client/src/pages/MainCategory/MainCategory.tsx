@@ -1,13 +1,12 @@
 import React from "react";
-import axios from "axios";
 
-import { Container, Row, Spinner } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 
 import { APIClient } from "../../core/APIClient";
 
-import "./MainCategoryStyles.css";
+import styles from "./MainCategory.module.css";
 
-import PublicationPresentationCard from "../../myComponents/PublicationPresentationCard/PublicationPresentationCard";
+import PublicationPresentationCard from "../../components/PublicationPresentationCard/PublicationPresentationCard";
 
 interface MainCategoryProps {}
 
@@ -95,8 +94,8 @@ class MainCategory extends React.Component<MainCategoryProps, MainCategoryState>
 		return this.state.loading ? (
 			<Spinner animation="border" variant="success" />
 		) : (
-			<Container id="Table" fluid>
-				<Row className="publicationCard3way">{this.state.items}</Row>
+			<Container className={styles.publications} id="Table" fluid>
+				{this.state.items}
 			</Container>
 		);
 	}

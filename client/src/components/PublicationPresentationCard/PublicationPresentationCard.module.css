@@ -1,0 +1,69 @@
+.postCard {
+	display: grid;
+	grid-template-rows: 300px 200px;
+
+	height: 500px;
+	width: 300px;
+
+	background-color: var(--terciaryColor);
+}
+
+.body {
+	background-color: var(--mainColor);
+
+	color: var(--fontColor);
+
+	padding: 12px;
+}
+
+.body h5 {
+	text-indent: 12px;
+}
+
+.imgContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	height: 100%;
+	width: 100%;
+}
+
+.previewImage {
+	height: 100%;
+	width: 100%;
+}
+
+.normalButton {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	justify-content: center;
+
+	height: 60px;
+	width: 120px;
+	padding: 12px;
+
+	color: var(--fontColor);
+	border: 1px solid var(--secondaryColor) !important;
+	background-color: var(--mainColor) !important;
+}
+
+.normalButton:hover {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	justify-content: center;
+
+	height: 60px;
+	width: 120px;
+	padding: 12px;
+
+	color: white;
+	border: 1px solid var(--fontColor) !important;
+	background-color: var(--mainColor) !important;
+}
+
+.border-success {
+	border-color: var(--mainColor) !important;
+}

@@ -2,8 +2,8 @@ import React from "react";
 
 import { APIClient } from "../../core/APIClient";
 
-import DynamicTablePublications from "../../myComponents/DynamicTablePublications/DynamicTablePublications";
-import PublicationWriter from "../../myComponents/PublicationWriter/PublicationWriter";
+import DynamicTablePublications from "../../components/DynamicTablePublications/DynamicTablePublications";
+import PublicationWriter from "../../components/PublicationWriter/PublicationWriter";
 
 interface Props {}
 
