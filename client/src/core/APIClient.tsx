@@ -2,7 +2,6 @@ import axios from "axios";
 
 export class APIClient {
 	private static instance: APIClient;
-	private apiServer: string = "http://localhost:9000";
 
 	private constructor() {}
 
@@ -12,7 +11,6 @@ export class APIClient {
 
 	public async deletePost(params: { idPost: number }): Promise<boolean> {
 		try {
-			//await axios.post(`${this.apiServer}/publications/publish/deletePost/`, params); //url + parametros
 			await axios.post(`/publications/publish/deletePost/`, params); //url + parametros
 			return true;
 		} catch (error) {
@@ -34,14 +32,38 @@ export class APIClient {
 		}
 	}
 
-	public async fetchPostResponses(params: { itemToSearch: number }): Promise<any> {
+	public async fetchPost(idPost: number): Promise<any> {
 		try {
-			const response = await axios.post(`/publications/publish/list`, params);
+			const response = await axios.post(`/publications/publish/viewSinglePost`, { idPost: idPost });
 
 			return response;
 		} catch (error) {
 			console.log(error);
 
+			return null;
+		}
+	}
+
+	public async fetchPostResponses(idPost: number, onlyIds: boolean = false): Promise<any> {
+		try {
+			const response = await axios.post(`/publications/publish/viewSinglePostResponses`, { idPost: idPost, onlyIds: onlyIds });
+
+			return response;
+		} catch (error) {
+			console.log(error);
+
+			return [];
+		}
+	}
+
+	public async fetchPostComment(idPost: number): Promise<any> {
+		try {
+			const response = await await this.fetchPost(idPost);
+
+			console.dir({ ...response.data.arrayOfPublications[0] });
+			return { ...response.data.arrayOfPublications[0] };
+		} catch (error) {
+			console.log(error);
 			return null;
 		}
 	}

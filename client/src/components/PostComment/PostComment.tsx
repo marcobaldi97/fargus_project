@@ -1,31 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Spinner } from "react-bootstrap";
+
+import { APIClient } from "../../core/APIClient";
 
 import styles from "./PostComment.module.css";
 
 interface PostCommentProps {
 	commentId: number;
-	commentImg: any;
-	commentContent: string;
 	responses?: number[];
 	deleteComment?: () => void;
 }
 
-interface PostCommentState {
-	imgRezise: boolean;
-}
+const PostComment = (props: PostCommentProps) => {
+	const { commentId, responses } = props;
 
-class PostComment extends React.Component<PostCommentProps, PostCommentState> {
-	constructor(props: PostCommentProps) {
-		super(props);
+	const [content, setContent] = useState("");
+	const [imageFile, setImageFile] = useState("");
+	const [loading, setLoading] = useState(true);
 
-		this.imgOnClick = this.imgOnClick.bind(this);
+	useEffect(() => {
+		try {
+			APIClient.getInstance()
+				.fetchPostComment(commentId)
+				.then((response) => {
+					setContent(response.publication_content);
+					setImageFile(response.image_file);
+					setLoading(false);
+				});
+		} catch (err) {
+			console.log(err);
+		}
+	}, [commentId]);
 
-		this.state = {
-			imgRezise: false,
-		};
-	}
-
-	private printResponses(responses: number[] | undefined) {
+	function printResponses(responses: number[] | undefined) {
 		if (responses === undefined) return;
 
 		const responsesLinks: JSX.Element[] = [];
@@ -41,27 +48,29 @@ class PostComment extends React.Component<PostCommentProps, PostCommentState> {
 		return responsesLinks;
 	}
 
-	private imgOnClick() {
-		window.open(this.props.commentImg, "_blank");
+	function imgOnClick() {
+		window.open(imageFile ?? "", "_blank");
 	}
 
-	render() {
-		return (
-			<div id={`comment-${this.props.commentId}`} key={`comment-${this.props.commentId}`} className={styles.container}>
-				<div className={styles.leftContent}>
-					<img className={styles.imagePreview} src={this.props.commentImg} alt={">.<"} onClick={() => this.imgOnClick()} />
-				</div>
-
-				<div className={styles.rightContent}>
-					<div className={styles.topbar}>
-						<h5>{this.props.commentId}</h5>
-						<div className={styles.right}>{this.printResponses(this.props.responses)}</div>
-					</div>
-
-					<p>{this.props.commentContent}</p>
-				</div>
+	return (
+		<div id={`comment-${commentId}`} key={`comment-${commentId}`} className={styles.container}>
+			<div className={styles.leftContent}>
+				{loading ? (
+					<Spinner animation="border" variant="primary" />
+				) : (
+					<img className={styles.imagePreview} src={imageFile} alt={">.<"} onClick={imgOnClick} />
+				)}
 			</div>
-		);
-	}
-}
+
+			<div className={styles.rightContent}>
+				<div className={styles.topbar}>
+					<h5>{commentId}</h5>
+					<div className={styles.right}>{printResponses(responses)}</div>
+				</div>
+				{loading ? <Spinner animation="border" variant="primary" /> : <p>{content}</p>}
+			</div>
+		</div>
+	);
+};
+
 export default PostComment;

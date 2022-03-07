@@ -43,8 +43,8 @@
 }
 
 .fatherImg {
-	height: 300px;
-	width: 200px;
+	max-height: 350px;
+	max-width: 350px;
 
 	justify-self: flex-start;
 }

@@ -1,13 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router";
-import axios from "axios";
-
-import { Card, Button, Accordion } from "react-bootstrap";
 
 import PublicationWriter from "../../components/PublicationWriter/PublicationWriter";
 
 import styles from "./PublicationSingleViewer.module.css";
 import PostComment from "../../components/PostComment/PostComment";
+import { APIClient } from "../../core/APIClient";
 
 interface PublicationSingleViewerState {
 	post_id: string;
@@ -23,7 +21,7 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 		super(props);
 
 		this.refresh = this.refresh.bind(this);
-		this.printFather = this.printFather.bind(this);
+		this.setFather = this.setFather.bind(this);
 		this.printResponses = this.printResponses.bind(this);
 
 		this.componentDidMount = this.componentDidMount.bind(this);
@@ -38,20 +36,25 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 		}; //this.state
 	}
 
+	async componentDidMount() {
+		try {
+			APIClient.getInstance()
+				.fetchPost(parseInt(this.state.post_id, 10))
+				.then((response) => {
+					this.setFather(response.data.arrayOfPublications);
+				});
+		} catch (err) {
+			console.log(err);
+		}
+		this.refresh();
+	}
+
 	private refresh() {
 		try {
-			let aux = this.state.post_id;
-			let params = {
-				post_id: aux,
-			};
-			axios
-				.post("/publications/viewSinglePostResponses/", params) //url + parametros
+			APIClient.getInstance()
+				.fetchPostResponses(parseInt(this.state.post_id, 10), true)
 				.then((response) => {
-					const { arrayOfPublications } = response.data;
-					this.setState({ publications: arrayOfPublications });
-				})
-				.catch((err) => {
-					console.log(err); //codigo de que hacer en caso de error.
+					this.setState({ publications: response.data.arrayOfPublications });
 				});
 		} catch (err) {
 			console.log(err);
@@ -59,7 +62,7 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 	}
 
 	/**Prints father */
-	private printFather(elements: any) {
+	private setFather(elements: any) {
 		this.setState({ publication_content: elements[0].publication_content, imgsrc: elements[0].image_file });
 	}
 
@@ -67,36 +70,16 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 		const commentsToPrint: JSX.Element[] = [];
 
 		this.state.publications.forEach((currentItem) => {
-			const { publication_id, image_file, publication_content } = currentItem;
+			const { publication_id } = currentItem;
 
 			commentsToPrint.push(
 				<li className={styles.postComment}>
-					<PostComment commentId={publication_id} commentImg={image_file} commentContent={publication_content} />
+					<PostComment commentId={publication_id} />
 				</li>
 			); //Add the responses.
 		});
 
 		return commentsToPrint;
-	}
-
-	async componentDidMount() {
-		try {
-			let aux = this.state.post_id;
-			let params = {
-				post_id: aux,
-			};
-			axios
-				.post("/publications/viewSinglePost/", params)
-				.then((response) => {
-					this.printFather(response.data.arrayOfPublications);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		} catch (err) {
-			console.log(err);
-		}
-		await this.refresh();
 	}
 
 	render() {
@@ -124,5 +107,3 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 	}
 }
 export default withRouter(PublicationSingleViewer);
-
-//					<DynamicTablePublications elements={this.state.publications} refresh={this.refresh}></DynamicTablePublications>

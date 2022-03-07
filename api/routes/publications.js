@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const router = express.Router();
 
-const DataBaseMediator = require("../clases/dataBaseMediator");
+const DataBaseMediator = require("../classes/dataBaseMediator");
 
 const corsOptions = {
 	origin: "http://localhost:3000",
@@ -35,12 +35,6 @@ router.post("/list/", cors(corsOptions), async function (req, res, next) {
 		console.log(err);
 	}
 });
-
-function sleep(ms) {
-	return new Promise((resolve) => {
-		setTimeout(resolve, ms);
-	});
-}
 
 router.post("/publish/", cors(corsOptions), async function (req, res, next) {
 	const textToInput = req.body.textToInput;
@@ -84,17 +78,18 @@ router.post("/deletePost/", cors(corsOptions), async function (req, res, next) {
 
 router.post("/viewSinglePostResponses/", cors(corsOptions), async function (req, res, next) {
 	try {
-		const postId = req.body.post_id;
+		const postId = req.body.idPost;
+		const onlyIds = req.body.onlyIds;
 		const dbm = new DataBaseMediator();
-		const consult = "SELECT * FROM publications WHERE publication_father = " + postId + " ORDER BY publication_id;";
+		const consult = !onlyIds ? "SELECT * FROM publications WHERE publication_father = " + postId + " ORDER BY publication_id;" : "SELECT publication_id FROM publications WHERE publication_father = " + postId + " ORDER BY publication_id;";
 
 		await dbm.executeSelectConsult(consult);
 
-		const rowsToList = dbm.getLastSelectDBResponse();
+		const publications = dbm.getLastSelectDBResponse();
 
 		const responseObject = {
-			arraySize: rowsToList.lenght,
-			arrayOfPublications: rowsToList,
+			arraySize: publications.lenght,
+			arrayOfPublications: publications,
 		};
 
 		res.send(responseObject);
@@ -104,11 +99,10 @@ router.post("/viewSinglePostResponses/", cors(corsOptions), async function (req,
 		console.log(err);
 	}
 });
-module.exports = router;
 
 router.post("/viewSinglePost/", cors(corsOptions), async function (req, res, next) {
 	try {
-		const postId = req.body.post_id;
+		const postId = req.body.idPost;
 		const dbm = new DataBaseMediator();
 		const consult = "SELECT * FROM publications WHERE publication_id = " + postId + ";";
 
@@ -128,4 +122,5 @@ router.post("/viewSinglePost/", cors(corsOptions), async function (req, res, nex
 		console.log(err);
 	}
 });
+
 module.exports = router;
