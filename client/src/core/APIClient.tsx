@@ -60,7 +60,6 @@ export class APIClient {
 		try {
 			const response = await await this.fetchPost(idPost);
 
-			console.dir({ ...response.data.arrayOfPublications[0] });
 			return { ...response.data.arrayOfPublications[0] };
 		} catch (error) {
 			console.log(error);
@@ -68,7 +67,7 @@ export class APIClient {
 		}
 	}
 
-	public async publishPost(params: { textToInput: string; srcToInput: string; responseTo: string; imgFile: any }): Promise<any> {
+	public async publishPost(params: { textToInput: string; srcToInput: string; responseTo: string | number; imgFile: any }): Promise<any> {
 		try {
 			const response = await axios.post("/publications/publish/", params);
 			return response;

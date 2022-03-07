@@ -1,7 +1,18 @@
+.publicationsContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	min-height: 100%;
+}
+
 .publications {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 
 	gap: 12px;
 

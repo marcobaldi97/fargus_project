@@ -1,0 +1,18 @@
+.header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	background-color: var(--secondaryColor) !important;
+	color: var(--fontColor) !important;
+}
+
+.body {
+	display: flex;
+	flex-direction: column;
+	justify-content: initial;
+
+	color: var(--fontColor) !important;
+	background-color: var(--mainColor) !important;
+}

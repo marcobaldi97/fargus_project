@@ -1,46 +1,51 @@
 import React, { useState, useEffect } from "react";
-import { Spinner } from "react-bootstrap";
 
 import { APIClient } from "../../core/APIClient";
+import Loader from "../Loader/Loader";
 
 import styles from "./PostComment.module.css";
+import PostCommentResponse from "../PostCommentResponse/PostCommentResponse";
 
 interface PostCommentProps {
 	commentId: number;
-	responses?: number[];
 	deleteComment?: () => void;
 }
 
 const PostComment = (props: PostCommentProps) => {
-	const { commentId, responses } = props;
+	const { commentId } = props;
 
 	const [content, setContent] = useState("");
 	const [imageFile, setImageFile] = useState("");
 	const [loading, setLoading] = useState(true);
+	const [responseVisible, setResponseVisible] = useState(false);
+	const [responses, setResponses] = useState<any>([]);
 
 	useEffect(() => {
 		try {
-			APIClient.getInstance()
-				.fetchPostComment(commentId)
-				.then((response) => {
-					setContent(response.publication_content);
-					setImageFile(response.image_file);
-					setLoading(false);
-				});
+			const apiClient = APIClient.getInstance();
+
+			apiClient.fetchPostComment(commentId).then((response) => {
+				setContent(response.publication_content);
+				setImageFile(response.image_file);
+				setLoading(false);
+			});
+
+			apiClient.fetchPostResponses(commentId).then((response) => {
+				setResponses(response.data.arrayOfPublications);
+			});
 		} catch (err) {
 			console.log(err);
 		}
 	}, [commentId]);
 
-	function printResponses(responses: number[] | undefined) {
+	function printResponses(responses: any[] | undefined) {
 		if (responses === undefined) return;
 
-		const responsesLinks: JSX.Element[] = [];
-
-		responses.forEach((currentItem) => {
-			responsesLinks.push(
+		const responsesLinks: JSX.Element[] = responses.map((currentResponse) => {
+			const { publication_id } = currentResponse;
+			return (
 				<h6>
-					- <a href={`#comment-${currentItem}`}>#{currentItem}</a>
+					<a href={`#comment-${publication_id}`}> #{publication_id}</a>
 				</h6>
 			);
 		});
@@ -55,19 +60,21 @@ const PostComment = (props: PostCommentProps) => {
 	return (
 		<div id={`comment-${commentId}`} key={`comment-${commentId}`} className={styles.container}>
 			<div className={styles.leftContent}>
-				{loading ? (
-					<Spinner animation="border" variant="primary" />
-				) : (
+				<Loader loading={loading}>
 					<img className={styles.imagePreview} src={imageFile} alt={">.<"} onClick={imgOnClick} />
-				)}
+				</Loader>
 			</div>
 
 			<div className={styles.rightContent}>
 				<div className={styles.topbar}>
-					<h5>{commentId}</h5>
+					<h5 onClick={() => setResponseVisible(!responseVisible)}>{commentId}</h5>
+					<PostCommentResponse toRespond={commentId} visible={responseVisible} onClose={() => setResponseVisible(false)} />
 					<div className={styles.right}>{printResponses(responses)}</div>
 				</div>
-				{loading ? <Spinner animation="border" variant="primary" /> : <p>{content}</p>}
+
+				<Loader loading={loading}>
+					<p>{content}</p>
+				</Loader>
 			</div>
 		</div>
 	);

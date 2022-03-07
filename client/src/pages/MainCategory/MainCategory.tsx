@@ -7,6 +7,7 @@ import { APIClient } from "../../core/APIClient";
 import styles from "./MainCategory.module.css";
 
 import PublicationPresentationCard from "../../components/PublicationPresentationCard/PublicationPresentationCard";
+import Loader from "../../components/Loader/Loader";
 
 interface MainCategoryProps {}
 
@@ -91,12 +92,14 @@ class MainCategory extends React.Component<MainCategoryProps, MainCategoryState>
 	}
 
 	render() {
-		return this.state.loading ? (
-			<Spinner animation="border" variant="success" />
-		) : (
-			<Container className={styles.publications} id="Table" fluid>
-				{this.state.items}
-			</Container>
+		return (
+			<div className={styles.publicationsContainer}>
+				<Loader loading={this.state.loading}>
+					<Container className={styles.publications} id="Table" fluid>
+						{this.state.items}
+					</Container>
+				</Loader>
+			</div>
 		);
 	}
 }
