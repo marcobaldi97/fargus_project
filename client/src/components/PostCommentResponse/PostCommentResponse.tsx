@@ -8,13 +8,14 @@ import styles from "./PostCommentResponse.module.scss";
 interface PostCommentResponseProps {
 	toRespond: number;
 	visible: boolean;
+	original_publication_id: number;
 	onClose: () => void;
 }
 
 const PostCommentResponse: React.FunctionComponent<PostCommentResponseProps> = (props) => {
-	const { toRespond, visible, onClose } = props;
+	const { toRespond, visible, onClose, original_publication_id } = props;
 	const [response, setResponse] = useState("");
-	const [img, setImg] = useState<unknown>();
+	const [img, setImg] = useState<string>();
 	const [uploading, setUploading] = useState(false);
 
 	function handleChange(event: any): void {
@@ -35,13 +36,18 @@ const PostCommentResponse: React.FunctionComponent<PostCommentResponseProps> = (
 
 		const fileArray = await getBase64(event.target.files[0]);
 
-		setImg(fileArray);
+		setImg(fileArray as string);
 		setUploading(false);
 	}
 
 	function handleSubmmit() {
 		try {
-			APIClient.getInstance().publishPost({ textToInput: response, srcToInput: "", responseTo: toRespond.toString(), imgFile: img as any });
+			APIClient.getInstance().publishPost({
+				publication_content: response,
+				publication_father: toRespond,
+				original_publication_id: original_publication_id,
+				image_file: img ?? "",
+			});
 		} catch (error) {
 			console.error(error);
 		}

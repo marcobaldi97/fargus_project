@@ -8,11 +8,12 @@ import PostCommentResponse from "../PostCommentResponse/PostCommentResponse";
 
 interface PostCommentProps {
 	commentId: number;
+	original_publication_id: number;
 	deleteComment?: () => void;
 }
 
 const PostComment = (props: PostCommentProps) => {
-	const { commentId } = props;
+	const { commentId, original_publication_id } = props;
 
 	const [content, setContent] = useState("");
 	const [imageFile, setImageFile] = useState("");
@@ -68,7 +69,12 @@ const PostComment = (props: PostCommentProps) => {
 			<div className={styles.rightContent}>
 				<div className={styles.topbar}>
 					<h5 onClick={() => setResponseVisible(!responseVisible)}>{commentId}</h5>
-					<PostCommentResponse toRespond={commentId} visible={responseVisible} onClose={() => setResponseVisible(false)} />
+					<PostCommentResponse
+						toRespond={commentId}
+						visible={responseVisible}
+						original_publication_id={original_publication_id}
+						onClose={() => setResponseVisible(false)}
+					/>
 					<div className={styles.right}>{printResponses(responses)}</div>
 				</div>
 

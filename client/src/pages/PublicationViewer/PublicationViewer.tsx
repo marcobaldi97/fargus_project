@@ -55,7 +55,7 @@ class PublicationViewer extends React.Component<Props, State> {
 
 	private async refresh() {
 		let params = {
-			itemToSearch: this.state.current_value,
+			publication_id: this.state.current_value,
 		};
 
 		const response = await this.apiClient.fetchPublications(params);
@@ -68,7 +68,7 @@ class PublicationViewer extends React.Component<Props, State> {
 	render() {
 		return (
 			<div>
-				<PublicationWriter fatherId="0" refresh={async () => this.refresh()} />
+				<PublicationWriter fatherId={0} refresh={async () => this.refresh()} />
 
 				<button className="btn btn-outline-success iNeedMoreMargins" onClick={async () => this.refresh()}>
 					Refresh

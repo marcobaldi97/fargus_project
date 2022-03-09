@@ -8,7 +8,7 @@ import PostComment from "../../components/PostComment/PostComment";
 import { APIClient } from "../../core/APIClient";
 
 interface PublicationSingleViewerState {
-	post_id: string;
+	post_id: number;
 	imgsrc: string;
 	publication_content: string;
 	items: [];
@@ -39,9 +39,9 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 	async componentDidMount() {
 		try {
 			APIClient.getInstance()
-				.fetchPost(parseInt(this.state.post_id, 10))
+				.fetchPost(this.state.post_id)
 				.then((response) => {
-					this.setFather(response.data.arrayOfPublications);
+					this.setFather(response.data.arrayOfPublications ?? []);
 				});
 		} catch (err) {
 			console.log(err);
@@ -52,7 +52,7 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 	private refresh() {
 		try {
 			APIClient.getInstance()
-				.fetchPostResponses(parseInt(this.state.post_id, 10), true)
+				.fetchPostResponses(this.state.post_id, true)
 				.then((response) => {
 					this.setState({ publications: response.data.arrayOfPublications });
 				});
@@ -63,18 +63,18 @@ class PublicationSingleViewer extends React.Component<any, PublicationSingleView
 
 	/**Prints father */
 	private setFather(elements: any) {
-		this.setState({ publication_content: elements[0].publication_content, imgsrc: elements[0].image_file });
+		if (elements.length > 0) this.setState({ publication_content: elements[0].publication_content, imgsrc: elements[0].image_file });
 	}
 
 	private printResponses() {
 		const commentsToPrint: JSX.Element[] = [];
 
-		this.state.publications.forEach((currentItem) => {
+		this.state.publications?.forEach((currentItem) => {
 			const { publication_id } = currentItem;
 
 			commentsToPrint.push(
 				<li className={styles.postComment}>
-					<PostComment commentId={publication_id} />
+					<PostComment commentId={publication_id} original_publication_id={this.state.post_id} />
 				</li>
 			); //Add the responses.
 		});

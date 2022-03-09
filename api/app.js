@@ -39,6 +39,7 @@ app.use("/publications/list/", publicationsRouter);
 app.use("/publications/deletePost/", publicationsRouter);
 app.use("/publications/viewSinglePost/", publicationsRouter);
 app.use("/publications/viewSinglePostResponses/", publicationsRouter);
+app.use("/publications/viewCommentResponses/", publicationsRouter);
 //---------------------------------------------------------
 
 // catch 404 and forward to error handler

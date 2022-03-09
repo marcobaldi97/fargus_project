@@ -39,10 +39,10 @@ class MakeNewPost extends React.Component<MakeNewPostProps, MakeNewPostState> {
 		this.setState({ loading: true });
 
 		const response = await this.apiClient.publishPost({
-			imgFile: copyState.selectedFile,
-			responseTo: "0",
-			srcToInput: copyState.valueImg,
-			textToInput: copyState.value,
+			publication_content: copyState.value,
+			publication_father: 0,
+			original_publication_id: 0,
+			image_file: copyState.valueImg,
 		});
 
 		this.setState({ loading: false });
@@ -66,7 +66,7 @@ class MakeNewPost extends React.Component<MakeNewPostProps, MakeNewPostState> {
 				<div>
 					<h1>Publish a new Post: {this.state.loading && <Spinner animation="border" variant="success" />}</h1>
 				</div>
-				<PublicationWriter fatherId="0" refresh={() => {}} handleSubmit={this.handleSubmit} />
+				<PublicationWriter fatherId={0} refresh={() => {}} handleSubmit={this.handleSubmit} />
 				<div>
 					<h1>{this.state.publishMessage}</h1>
 					{this.state.redirection && <Redirect to="/mainCategories" />}

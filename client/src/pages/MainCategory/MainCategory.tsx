@@ -77,7 +77,7 @@ class MainCategory extends React.Component<MainCategoryProps, MainCategoryState>
 		this.setState({ loading: true });
 
 		const params = {
-			itemToSearch: this.state.current_value,
+			publication_id: this.state.current_value,
 		};
 
 		const response = await this.apiClient.fetchPublications(params);

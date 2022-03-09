@@ -54,7 +54,7 @@ class DynamicTablePublications extends React.Component<DynamicTablePublicationsP
 
 	private async deleteRecord(itemToDelete: number) {
 		let params = {
-			idPost: itemToDelete,
+			publication_id: itemToDelete,
 		};
 
 		const deleteConfirmation = await this.apiClient.deletePost(params);
